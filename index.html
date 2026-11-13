@@ -86,6 +86,114 @@ footer{text-align:center;color:#aaa;padding:20px;font-size:12px}
 <p>Player: SK Gamer</p>
 <p>Best Flight: <span id="best">0</span>x</p>
 <button onclick="resetGame()">RESET LOCAL GAME</button>
+
+<section class="game">
+<h2>🎰 Lucky Slots</h2>
+<div id="slots" style="font-size:45px;margin:15px">🍒 | ⭐ | 🍋</div>
+<button onclick="playSlots()">SPIN</button>
+<div class="result" id="slotsResult"></div>
+</section>
+
+<section class="game">
+<h2>🃏 Card Match</h2>
+<p>একই দুটি কার্ড খুঁজুন।</p>
+<div class="grid" id="cardMatch"></div>
+<div class="result" id="cardResult"></div>
+<button onclick="newCardMatch()">NEW CARDS</button>
+</section>
+
+<section class="game">
+<h2>🔢 Number Challenge</h2>
+<p>১ থেকে ১০-এর মধ্যে সংখ্যাটি অনুমান করুন।</p>
+<input id="guessNumber" type="number" min="1" max="10"
+style="padding:12px;width:100%;border-radius:8px">
+<button onclick="checkNumber()">CHECK</button>
+<div class="result" id="numberResult"></div>
+</section>
+
+<section class="game">
+<h2>🎡 Lucky Wheel Bonus</h2>
+<div style="font-size:45px">🎡</div>
+<button onclick="extraWheel()">SPIN WHEEL</button>
+<div class="result" id="extraWheelResult"></div>
+</section>
+
+<script>
+function playSlots(){
+ const icons=["🍒","⭐","🍋","🍇","🔔","🍉"];
+ const a=icons[Math.floor(Math.random()*icons.length)];
+ const b=icons[Math.floor(Math.random()*icons.length)];
+ const c=icons[Math.floor(Math.random()*icons.length)];
+ document.getElementById("slots").textContent=a+" | "+b+" | "+c;
+ let reward=0;
+ if(a===b && b===c) reward=30;
+ else if(a===b || b===c || a===c) reward=10;
+ if(reward) addCoins(reward);
+ document.getElementById("slotsResult").textContent=
+ reward ? "অভিনন্দন! +"+reward+" ভার্চুয়াল পয়েন্ট" : "আবার চেষ্টা করুন!";
+}
+
+let cmCards=[],cmFirst=null,cmLock=false,cmFound=0;
+function newCardMatch(){
+ cmCards=["🐱","🐶","🐼","🦊","🐸","🐵","🐱","🐶","🐼","🦊","🐸","🐵"]
+ .sort(()=>Math.random()-.5);
+ cmFirst=null;cmLock=false;cmFound=0;
+ document.getElementById("cardResult").textContent="";
+ renderCardMatch();
+}
+function renderCardMatch(){
+ const box=document.getElementById("cardMatch");
+ box.innerHTML="";
+ cmCards.forEach((v,i)=>{
+  const b=document.createElement("button");
+  b.className="tile";
+  b.textContent=v==="?"?"✅":"❔";
+  b.onclick=()=>flipCard(i);
+  b.disabled=v==="?"||cmLock;
+  box.appendChild(b);
+ });
+}
+function flipCard(i){
+ if(cmLock||cmCards[i]==="?")return;
+ const buttons=document.querySelectorAll("#cardMatch button");
+ buttons[i].textContent=cmCards[i];
+ if(cmFirst===null){cmFirst=i;return;}
+ if(cmCards[cmFirst]===cmCards[i]){
+  cmCards[cmFirst]="?";cmCards[i]="?";
+  cmFound++;cmFirst=null;
+  if(cmFound===6){
+   addCoins(40);
+   document.getElementById("cardResult").textContent="সব মিলেছে! +40 পয়েন্ট";
+  }else renderCardMatch();
+ }else{
+  cmLock=true;
+  let old=cmFirst;cmFirst=null;
+  setTimeout(()=>{
+   cmLock=false;renderCardMatch();
+  },800);
+ }
+}
+function checkNumber(){
+ const input=document.getElementById("guessNumber");
+ const n=Number(input.value);
+ if(!Number.isInteger(n)||n<1||n>10){
+  document.getElementById("numberResult").textContent="১ থেকে ১০-এর মধ্যে সংখ্যা লিখুন।";
+  return;
+ }
+ const answer=1+Math.floor(Math.random()*10);
+ document.getElementById("numberResult").textContent=
+ "সঠিক সংখ্যা ছিল "+answer+(n===answer?" — দারুণ! +20 পয়েন্ট":" — আবার চেষ্টা করুন।");
+ if(n===answer)addCoins(20);
+ input.value="";
+}
+function extraWheel(){
+ const prizes=[5,10,15,20,25];
+ const p=prizes[Math.floor(Math.random()*prizes.length)];
+ addCoins(p);
+ document.getElementById("extraWheelResult").textContent="+"+p+" ভার্চুয়াল পয়েন্ট!";
+}
+newCardMatch();
+</script>
 </section>
 </main>
 <footer>SK GAMING VIP © 2026<br>শুধু বিনোদনের জন্য ভার্চুয়াল পয়েন্ট। কোনো বাস্তব অর্থ লেনদেন নেই।</footer>

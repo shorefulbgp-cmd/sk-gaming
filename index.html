@@ -7,317 +7,281 @@
 <title>SK GAMING VIP</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:22px;background:#17120a;border-bottom:2px solid #d6a52b}
-h1{color:#ffd34d;margin:0;font-size:30px}
-header p{color:#c9b477;margin:8px 0 0}
-.balance{margin:16px;padding:18px;text-align:center;background:#201a0b;border:1px solid #d6a52b;border-radius:14px}
-.balance strong{display:block;color:#ffd34d;font-size:30px;margin-top:8px}
-main{padding:12px;max-width:650px;margin:auto}
-.game{background:#171717;border:1px solid #5c481b;border-radius:14px;padding:17px;margin:14px 0;text-align:center}
-h2{color:#ffd34d;margin-top:0}
-button{background:linear-gradient(120deg,#ffd34d,#b77c08);border:0;border-radius:9px;padding:12px 18px;font-weight:bold;margin:5px;color:#171000;font-size:15px}
+body{margin:0;background:#101713;color:#fff;font-family:Arial,sans-serif}
+header{background:#142b20;padding:15px;position:sticky;top:0;z-index:5;border-bottom:2px solid #28c879}
+.logo{font-size:25px;font-weight:bold;color:#35e28a}
+.top{display:flex;justify-content:space-between;align-items:center}
+.balance{background:#203c2d;padding:8px 12px;border-radius:8px;color:#ffe16a}
+nav{display:flex;gap:8px;overflow:auto;padding:10px;background:#17231c}
+nav button{white-space:nowrap;background:#263b2e;color:white}
+button{border:0;border-radius:8px;padding:12px 15px;background:#20b86b;color:#06160c;font-weight:bold;cursor:pointer;margin:3px}
 button:disabled{opacity:.5}
-.result{color:#ffd34d;min-height:24px;margin:12px}
-.rocket{font-size:50px;margin:12px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.tile{font-size:25px;padding:15px 2px;background:#282317;color:white;border:1px solid #a17b25;border-radius:8px}
-footer{text-align:center;color:#aaa;padding:20px;font-size:12px}
+main{max-width:850px;margin:auto;padding:12px}
+.hero{background:linear-gradient(120deg,#174b30,#101713);padding:22px;border-radius:14px;margin-bottom:15px}
+.hero h1{color:#50ec98;margin:0 0 8px}
+h2{color:#50ec98}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card,.panel{background:#1b2921;border:1px solid #31533e;border-radius:12px;padding:14px}
+.card{text-align:center;cursor:pointer}
+.card .emoji{font-size:42px}
+.card h3{margin:8px 0;color:#fff}
+.card p{color:#b8c9bd;font-size:13px}
+.game{display:none}
+.game.active{display:block}
+.panel{text-align:center;margin:12px 0}
+.big{font-size:55px;margin:15px}
+.result{color:#ffe16a;min-height:26px;margin:12px}
+input{padding:12px;border-radius:8px;border:0;width:100%;margin:8px 0}
+.tile{font-size:25px;padding:15px 2px;background:#263d30;color:white;border:1px solid #4e8d64}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+footer{text-align:center;color:#9aac9f;padding:25px;font-size:12px}
+.back{background:#33463a;color:white}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
 <header>
-<h1>👑 SK GAMING VIP</h1>
-<p>Play • Enjoy • Earn Virtual Points</p>
+ <div class="top">
+  <div class="logo">🟢 SK GAMING</div>
+  <div class="balance">🪙 <span id="coins">1000</span></div>
+ </div>
 </header>
+<nav>
+ <button onclick="showHome()">🏠 Home</button>
+ <button onclick="showCategory('sports')">⚽ Sports</button>
+ <button onclick="showCategory('arcade')">🎮 Arcade</button>
+ <button onclick="showCategory('all')">All Games</button>
+ <button onclick="showProfile()">👤 Profile</button>
+</nav>
+
 <main>
-<div class="balance">
-আপনার ভার্চুয়াল কয়েন
-<strong id="coins">1000</strong>
+<div id="home">
+ <div class="hero">
+  <h1>WELCOME TO SK GAMING</h1>
+  <p>Play games • Enjoy • Collect virtual points</p>
+  <button onclick="showCategory('all')">EXPLORE GAMES</button>
+ </div>
+ <h2>⭐ Popular Games</h2>
+ <div class="grid" id="gameList"></div>
 </div>
 
-<section class="game">
-<h2>🚀 Crash Arcade</h2>
-<div class="rocket" id="rocket">🚀</div>
-<div id="flight">উড়ান শুরু করতে Play চাপুন</div>
-<button id="start" onclick="startFlight()">PLAY</button>
-<button id="stop" onclick="stopFlight()" disabled>STOP</button>
-<div class="result" id="crashResult"></div>
-</section>
+<div id="gamePage" style="display:none">
+ <button class="back" onclick="showHome()">← Back Home</button>
+ <div id="gameContent"></div>
+</div>
 
-<section class="game">
-<h2>🪙 Coin Tap</h2>
-<p>প্রতিবার ট্যাপ করলে ১০ পয়েন্ট পাবেন।</p>
-<button onclick="addCoins(10)">TAP COIN +10</button>
-</section>
-
-<section class="game">
-<h2>🎯 Skill Wheel</h2>
-<div style="font-size:45px">🎡</div>
-<button onclick="spinWheel()">SPIN</button>
-<div class="result" id="wheelResult"></div>
-</section>
-
-<section class="game">
-<h2>🎲 Dice Puzzle</h2>
-<p>পাশা ঘুরিয়ে সংখ্যা দেখুন।</p>
-<div class="rocket" id="dice">🎲</div>
-<button onclick="rollDice()">ROLL DICE</button>
-<div class="result" id="diceResult"></div>
-</section>
-
-<section class="game">
-<h2>🧠 Memory Match</h2>
-<p>একই রকম দুটি কার্ড খুঁজুন।</p>
-<div class="grid" id="memory"></div>
-<div class="result" id="memoryResult"></div>
-<button onclick="newMemory()">NEW GAME</button>
-</section>
-
-<section class="game">
-<h2>🎁 Daily Bonus</h2>
-<p>প্রতিদিনের বোনাস সংগ্রহ করুন।</p>
-<button onclick="dailyBonus()">COLLECT +50</button>
-<div class="result" id="bonusResult"></div>
-</section>
-
-<section class="game">
-<h2>👤 Player Profile</h2>
-<p>Player: SK Gamer</p>
-<p>Best Flight: <span id="best">0</span>x</p>
-<button onclick="resetGame()">RESET LOCAL GAME</button>
-
-<section class="game">
-<h2>🎰 Lucky Slots</h2>
-<div id="slots" style="font-size:45px;margin:15px">🍒 | ⭐ | 🍋</div>
-<button onclick="playSlots()">SPIN</button>
-<div class="result" id="slotsResult"></div>
-</section>
-
-<section class="game">
-<h2>🃏 Card Match</h2>
-<p>একই দুটি কার্ড খুঁজুন।</p>
-<div class="grid" id="cardMatch"></div>
-<div class="result" id="cardResult"></div>
-<button onclick="newCardMatch()">NEW CARDS</button>
-</section>
-
-<section class="game">
-<h2>🔢 Number Challenge</h2>
-<p>১ থেকে ১০-এর মধ্যে সংখ্যাটি অনুমান করুন।</p>
-<input id="guessNumber" type="number" min="1" max="10"
-style="padding:12px;width:100%;border-radius:8px">
-<button onclick="checkNumber()">CHECK</button>
-<div class="result" id="numberResult"></div>
-</section>
-
-<section class="game">
-<h2>🎡 Lucky Wheel Bonus</h2>
-<div style="font-size:45px">🎡</div>
-<button onclick="extraWheel()">SPIN WHEEL</button>
-<div class="result" id="extraWheelResult"></div>
-</section>
-
-<script>
-function playSlots(){
- const icons=["🍒","⭐","🍋","🍇","🔔","🍉"];
- const a=icons[Math.floor(Math.random()*icons.length)];
- const b=icons[Math.floor(Math.random()*icons.length)];
- const c=icons[Math.floor(Math.random()*icons.length)];
- document.getElementById("slots").textContent=a+" | "+b+" | "+c;
- let reward=0;
- if(a===b && b===c) reward=30;
- else if(a===b || b===c || a===c) reward=10;
- if(reward) addCoins(reward);
- document.getElementById("slotsResult").textContent=
- reward ? "অভিনন্দন! +"+reward+" ভার্চুয়াল পয়েন্ট" : "আবার চেষ্টা করুন!";
-}
-
-let cmCards=[],cmFirst=null,cmLock=false,cmFound=0;
-function newCardMatch(){
- cmCards=["🐱","🐶","🐼","🦊","🐸","🐵","🐱","🐶","🐼","🦊","🐸","🐵"]
- .sort(()=>Math.random()-.5);
- cmFirst=null;cmLock=false;cmFound=0;
- document.getElementById("cardResult").textContent="";
- renderCardMatch();
-}
-function renderCardMatch(){
- const box=document.getElementById("cardMatch");
- box.innerHTML="";
- cmCards.forEach((v,i)=>{
-  const b=document.createElement("button");
-  b.className="tile";
-  b.textContent=v==="?"?"✅":"❔";
-  b.onclick=()=>flipCard(i);
-  b.disabled=v==="?"||cmLock;
-  box.appendChild(b);
- });
-}
-function flipCard(i){
- if(cmLock||cmCards[i]==="?")return;
- const buttons=document.querySelectorAll("#cardMatch button");
- buttons[i].textContent=cmCards[i];
- if(cmFirst===null){cmFirst=i;return;}
- if(cmCards[cmFirst]===cmCards[i]){
-  cmCards[cmFirst]="?";cmCards[i]="?";
-  cmFound++;cmFirst=null;
-  if(cmFound===6){
-   addCoins(40);
-   document.getElementById("cardResult").textContent="সব মিলেছে! +40 পয়েন্ট";
-  }else renderCardMatch();
- }else{
-  cmLock=true;
-  let old=cmFirst;cmFirst=null;
-  setTimeout(()=>{
-   cmLock=false;renderCardMatch();
-  },800);
- }
-}
-function checkNumber(){
- const input=document.getElementById("guessNumber");
- const n=Number(input.value);
- if(!Number.isInteger(n)||n<1||n>10){
-  document.getElementById("numberResult").textContent="১ থেকে ১০-এর মধ্যে সংখ্যা লিখুন।";
-  return;
- }
- const answer=1+Math.floor(Math.random()*10);
- document.getElementById("numberResult").textContent=
- "সঠিক সংখ্যা ছিল "+answer+(n===answer?" — দারুণ! +20 পয়েন্ট":" — আবার চেষ্টা করুন।");
- if(n===answer)addCoins(20);
- input.value="";
-}
-function extraWheel(){
- const prizes=[5,10,15,20,25];
- const p=prizes[Math.floor(Math.random()*prizes.length)];
- addCoins(p);
- document.getElementById("extraWheelResult").textContent="+"+p+" ভার্চুয়াল পয়েন্ট!";
-}
-newCardMatch();
-</script>
-</section>
+<div id="profile" style="display:none">
+ <div class="panel">
+  <h2>👤 Player Profile</h2>
+  <div class="big">🎮</div>
+  <h3>SK Gamer</h3>
+  <p>Virtual Points: <b id="profileCoins">1000</b></p>
+  <button onclick="dailyBonus()">🎁 Daily Bonus +50</button>
+  <div class="result" id="bonusResult"></div>
+  <button onclick="resetPoints()" style="background:#9d4848;color:white">Reset Local Game</button>
+ </div>
+</div>
 </main>
-<footer>SK GAMING VIP © 2026<br>শুধু বিনোদনের জন্য ভার্চুয়াল পয়েন্ট। কোনো বাস্তব অর্থ লেনদেন নেই।</footer>
+<footer>SK GAMING VIP © 2026<br>Entertainment with virtual points only. No real-money betting.</footer>
 
 <script>
-let coins=Number(localStorage.getItem("skcoins")||1000);
-let best=Number(localStorage.getItem("skbest")||0);
-let flightTimer=null, multiplier=1, flightActive=false;
+let coins=Number(localStorage.getItem("skvipcoins")||1000);
 function update(){
  document.getElementById("coins").textContent=coins;
- document.getElementById("best").textContent=best;
- localStorage.setItem("skcoins",coins);
- localStorage.setItem("skbest",best);
+ document.getElementById("profileCoins").textContent=coins;
+ localStorage.setItem("skvipcoins",coins);
 }
-function addCoins(n){
+function add(n){
  coins+=n;update();
 }
-function startFlight(){
- if(flightActive)return;
- flightActive=true;multiplier=1;
- document.getElementById("start").disabled=true;
- document.getElementById("stop").disabled=false;
- document.getElementById("crashResult").textContent="";
- document.getElementById("rocket").textContent="🚀";
- flightTimer=setInterval(()=>{
- multiplier+=0.1;
- document.getElementById("flight").textContent=multiplier.toFixed(1)+"x";
- if(Math.random()<0.035){
-  endFlight(false);
- }
- },300);
+const games=[
+ {id:"football",name:"Football Penalty",emoji:"⚽",cat:"sports",desc:"Shoot the ball into the goal"},
+ {id:"basket",name:"Basketball",emoji:"🏀",cat:"sports",desc:"Take your basketball shot"},
+ {id:"crash",name:"Crash Arcade",emoji:"🚀",cat:"arcade",desc:"Control your rocket flight"},
+ {id:"slots",name:"Lucky Slots",emoji:"🎰",cat:"arcade",desc:"Match the symbols"},
+ {id:"dice",name:"Dice Challenge",emoji:"🎲",cat:"arcade",desc:"Roll the dice"},
+ {id:"memory",name:"Memory Cards",emoji:"🃏",cat:"arcade",desc:"Find matching cards"},
+ {id:"racing",name:"Speed Racing",emoji:"🏎️",cat:"arcade",desc:"Race against the timer"}
+];
+function renderGames(cat="all"){
+ let list=document.getElementById("gameList");
+ list.innerHTML="";
+ games.filter(g=>cat==="all"||g.cat===cat).forEach(g=>{
+  let d=document.createElement("div");
+  d.className="card";
+  d.innerHTML=`<div class="emoji">${g.emoji}</div><h3>${g.name}</h3><p>${g.desc}</p><button>PLAY NOW</button>`;
+  d.onclick=()=>openGame(g.id);
+  list.appendChild(d);
+ });
 }
-function endFlight(stopped){
- if(!flightActive)return;
- clearInterval(flightTimer);flightActive=false;
- document.getElementById("start").disabled=false;
- document.getElementById("stop").disabled=true;
- if(stopped){
-  let reward=Math.round(multiplier*5);
-  coins+=reward;update();
-  best=Math.max(best,multiplier);
-  document.getElementById("crashResult").textContent="সফল! +" + reward + " ভার্চুয়াল পয়েন্ট";
- }else{
-  document.getElementById("rocket").textContent="💥";
-  document.getElementById("crashResult").textContent="রাউন্ড শেষ! আবার চেষ্টা করুন।";
- }
- document.getElementById("flight").textContent=multiplier.toFixed(1)+"x";
+function showHome(){
+ document.getElementById("home").style.display="block";
+ document.getElementById("gamePage").style.display="none";
+ document.getElementById("profile").style.display="none";
+}
+function showCategory(c){
+ showHome();renderGames(c);
+ document.getElementById("home").scrollIntoView();
+}
+function showProfile(){
+ document.getElementById("home").style.display="none";
+ document.getElementById("gamePage").style.display="none";
+ document.getElementById("profile").style.display="block";
  update();
 }
+function openGame(id){
+ document.getElementById("home").style.display="none";
+ document.getElementById("profile").style.display="none";
+ document.getElementById("gamePage").style.display="block";
+ let g=games.find(x=>x.id===id);
+ let c=document.getElementById("gameContent");
+ c.innerHTML=`<div class="panel"><h2>${g.emoji} ${g.name}</h2><div id="playArea"></div></div>`;
+ let a=document.getElementById("playArea");
+ if(id==="football")football(a);
+ if(id==="basket")basket(a);
+ if(id==="crash")crash(a);
+ if(id==="slots")slots(a);
+ if(id==="dice")dice(a);
+ if(id==="memory")memory(a);
+ if(id==="racing")racing(a);
+}
+function football(a){
+ a.innerHTML=`<div class="big">🥅</div><p>গোলের তিনটি দিকের একটি বেছে নিন!</p>
+ <button onclick="kick(0)">বামে</button><button onclick="kick(1)">মাঝে</button><button onclick="kick(2)">ডানে</button><div class="result" id="r"></div>`;
+}
+function kick(n){
+ let keeper=Math.floor(Math.random()*3);
+ let r=document.getElementById("r");
+ if(n!==keeper){add(15);r.textContent="GOAL! +15 পয়েন্ট ⚽";}
+ else r.textContent="গোলকিপার ঠেকিয়েছে! আবার চেষ্টা করুন।";
+}
+function basket(a){
+ a.innerHTML=`<div class="big">🏀</div><p>শট নিন!</p><button onclick="shoot()">SHOOT</button><div class="result" id="r"></div>`;
+}
+function shoot(){
+ let hit=Math.random()>.45;
+ if(hit){add(10);document.getElementById("r").textContent="দারুণ শট! +10 পয়েন্ট";}
+ else document.getElementById("r").textContent="মিস! আবার চেষ্টা করুন।";
+}
+let flightTimer=null,flight=1,flightOn=false;
+function crash(a){
+ a.innerHTML=`<div class="big" id="rocket">🚀</div><h2 id="flight">1.0x</h2>
+ <button id="flyStart" onclick="startFlight()">START FLIGHT</button>
+ <button id="flyStop" onclick="stopFlight()" disabled>LAND</button>
+ <div class="result" id="r"></div><p>কোনো বাজি নেই। এটি একটি টাইমিং গেম।</p>`;
+}
+function startFlight(){
+ if(flightOn)return;
+ flightOn=true;flight=1;
+ document.getElementById("flyStart").disabled=true;
+ document.getElementById("flyStop").disabled=false;
+ document.getElementById("r").textContent="";
+ flightTimer=setInterval(()=>{
+  flight+=.1;
+  document.getElementById("flight").textContent=flight.toFixed(1)+"x";
+  if(Math.random()<.025)endFlight(false);
+ },300);
+}
+function endFlight(success){
+ if(!flightOn)return;
+ clearInterval(flightTimer);flightOn=false;
+ document.getElementById("flyStart").disabled=false;
+ document.getElementById("flyStop").disabled=true;
+ if(success){
+  let reward=Math.round(flight*5);
+  add(reward);
+  document.getElementById("r").textContent="সফল ল্যান্ডিং! +"+reward+" পয়েন্ট";
+ }else{
+  document.getElementById("rocket").textContent="💥";
+  document.getElementById("r").textContent="রাউন্ড শেষ। আবার খেলুন!";
+ }
+}
 function stopFlight(){endFlight(true)}
-function spinWheel(){
- let prizes=[5,10,15,20,25,30];
- let p=prizes[Math.floor(Math.random()*prizes.length)];
- addCoins(p);
- document.getElementById("wheelResult").textContent="আপনি পেয়েছেন "+p+" পয়েন্ট!";
+function slots(a){
+ a.innerHTML=`<div class="big" id="slotView">🍒 ⭐ 🍋</div><button onclick="spin()">SPIN</button><div class="result" id="r"></div><p>শুধু বিনামূল্যের ভার্চুয়াল পয়েন্ট।</p>`;
 }
-function rollDice(){
+function spin(){
+ let s=["🍒","⭐","🍋","🍇","🔔","🍉"];
+ let x=[0,1,2].map(()=>s[Math.floor(Math.random()*s.length)]);
+ document.getElementById("slotView").textContent=x.join(" ");
+ let reward=x[0]===x[1]&&x[1]===x[2]?30:x[0]===x[1]||x[1]===x[2]||x[0]===x[2]?10:0;
+ if(reward)add(reward);
+ document.getElementById("r").textContent=reward?"ম্যাচ হয়েছে! +"+reward+" পয়েন্ট":"আবার চেষ্টা করুন!";
+}
+function dice(a){
+ a.innerHTML=`<div class="big" id="die">🎲</div><button onclick="roll()">ROLL</button><div class="result" id="r"></div>`;
+}
+function roll(){
  let n=1+Math.floor(Math.random()*6);
- document.getElementById("dice").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][n-1];
- document.getElementById("diceResult").textContent="সংখ্যা: "+n;
+ document.getElementById("die").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][n-1];
+ add(n);
+ document.getElementById("r").textContent="আপনার সংখ্যা "+n+" — +"+n+" পয়েন্ট";
 }
-let cards=[],first=null,locked=false,matches=0;
+let mc=[],first=null,locked=false,found=0;
+function memory(a){
+ a.innerHTML=`<p>সব জোড়া মিলিয়ে ৩০ পয়েন্ট সংগ্রহ করুন।</p><div class="tiles" id="mem"></div><button onclick="newMemory()">NEW GAME</button><div class="result" id="r"></div>`;
+ newMemory();
+}
 function newMemory(){
- cards=["🍎","🍌","🍇","🍒","🍋","🥝","🍉","🍍"];
- cards=[...cards,...cards].sort(()=>Math.random()-.5);
- first=null;locked=false;matches=0;
- document.getElementById("memoryResult").textContent="";
- renderMemory();
+ mc=["🐱","🐶","🐼","🦊","🐸","🐵","🐱","🐶","🐼","🦊","🐸","🐵"].sort(()=>Math.random()-.5);
+ first=null;locked=false;found=0;drawMemory();
 }
-function renderMemory(){
- let box=document.getElementById("memory");
+function drawMemory(){
+ let box=document.getElementById("mem");if(!box)return;
  box.innerHTML="";
- cards.forEach((v,i)=>{
- let b=document.createElement("button");
- b.className="tile";
- b.textContent=v==="?"?"❔":v;
- b.disabled=v==="?"||locked;
- b.onclick=()=>flip(i);
- box.appendChild(b);
+ mc.forEach((v,i)=>{
+  let b=document.createElement("button");b.className="tile";
+  b.textContent=v==="?"?"✅":"❔";
+  b.disabled=v==="?"||locked;
+  b.onclick=()=>flip(i);box.appendChild(b);
  });
 }
 function flip(i){
- if(cards[i]==="?"||locked)return;
- if(first===null){
-  first=i;renderMemory();
-  return;
- }
- let buttons=document.querySelectorAll("#memory button");
- buttons[i].textContent=cards[i];
- if(cards[first]===cards[i]){
-  cards[first]="?";cards[i]="?";matches++;
-  first=null;
-  if(matches===8){
-   addCoins(30);
-   document.getElementById("memoryResult").textContent="জিতেছেন! +30 পয়েন্ট";
-  }else renderMemory();
+ if(locked||mc[i]==="?")return;
+ let buttons=document.querySelectorAll("#mem button");
+ buttons[i].textContent=mc[i];
+ if(first===null){first=i;return;}
+ if(mc[first]===mc[i]){
+  mc[first]="?";mc[i]="?";first=null;found++;drawMemory();
+  if(found===6){add(30);document.getElementById("r").textContent="সব জোড়া মিলেছে! +30 পয়েন্ট";}
  }else{
-  locked=true;
-  buttons[first].textContent=cards[first];
-  setTimeout(()=>{
-   first=null;locked=false;renderMemory();
-  },700);
+  locked=true;let old=first;first=null;
+  setTimeout(()=>{locked=false;drawMemory()},800);
  }
+}
+function racing(a){
+ a.innerHTML=`<div class="big" id="car">🏎️</div><p>১০ সেকেন্ডে যতবার পারেন TAP করুন!</p><h2 id="laps">0</h2><button id="raceBtn" onclick="tapRace()">TAP TO RACE</button><button onclick="startRace()">START / RESET</button><div class="result" id="r"></div>`;
+}
+let laps=0,raceActive=false,raceEnd=null;
+function startRace(){
+ clearTimeout(raceEnd);laps=0;raceActive=true;
+ document.getElementById("laps").textContent="0";
+ document.getElementById("r").textContent="১০ সেকেন্ড শুরু!";
+ raceEnd=setTimeout(()=>{
+  raceActive=false;
+  let reward=laps*2;add(reward);
+  document.getElementById("r").textContent="রেস শেষ! "+laps+" ট্যাপ, +"+reward+" পয়েন্ট";
+ },10000);
+}
+function tapRace(){
+ if(!raceActive)return;
+ laps++;document.getElementById("laps").textContent=laps;
+ document.getElementById("car").textContent=laps%2?"🏎️":"🚗";
 }
 function dailyBonus(){
  let today=new Date().toDateString();
- if(localStorage.getItem("skbonus")===today){
-  document.getElementById("bonusResult").textContent="আজকের বোনাস নেওয়া হয়েছে।";
-  return;
+ if(localStorage.getItem("skvipbonus")===today){
+  document.getElementById("bonusResult").textContent="আজকের বোনাস নেওয়া হয়েছে।";return;
  }
- coins+=50;localStorage.setItem("skbonus",today);
- update();
+ add(50);localStorage.setItem("skvipbonus",today);
  document.getElementById("bonusResult").textContent="+50 পয়েন্ট পেয়েছেন!";
 }
-function resetGame(){
- if(confirm("সব স্থানীয় গেমের পয়েন্ট রিসেট করবেন?")){
-  coins=1000;best=0;
-  localStorage.removeItem("skcoins");
-  localStorage.removeItem("skbest");
-  update();
+function resetPoints(){
+ if(confirm("ভার্চুয়াল পয়েন্ট রিসেট করবেন?")){
+  coins=1000;update();
  }
 }
-update();
-newMemory();
+renderGames();update();
 </script>
 </body>
 </html>

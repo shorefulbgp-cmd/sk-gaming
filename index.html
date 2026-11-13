@@ -4,136 +4,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SK FOOTBALL 3D</title>
+<title>SK GAMING</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07150d;color:white;font-family:Arial}
-header{text-align:center;padding:14px;background:#102b1b;color:#4dffad;font-weight:bold}
-#score{display:flex;justify-content:space-around;padding:12px;background:#142c20;font-size:20px}
-#game{height:65vh;min-height:380px}
-canvas{display:block}
-#controls{display:flex;justify-content:center;gap:12px;padding:14px}
-button{padding:14px 20px;border:0;border-radius:10px;background:#16a765;color:white;font-weight:bold}
+body{margin:0;background:#07100d;color:#fff;font-family:Arial,sans-serif}
+header{background:#101d17;padding:17px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #24583c}
+.logo{font-size:23px;font-weight:bold;color:#36e78b}
+.coins{background:#1c3829;padding:9px 13px;border-radius:20px;color:#ffe18a}
+nav{display:flex;gap:20px;overflow:auto;padding:14px;background:#0c1912}
+nav a{color:#d7e8dc;text-decoration:none;white-space:nowrap}
+.hero{margin:15px;padding:24px;border-radius:17px;background:linear-gradient(120deg,#145b37,#071d14);border:1px solid #267b4d}
+.hero h1{font-size:29px;margin:0 0 10px}
+.hero p{color:#c4dfce}
+.hero button{background:#36e78b;color:#052013;padding:12px 22px;border:0;border-radius:8px;font-weight:bold}
+.search{margin:15px;width:calc(100% - 30px);padding:13px;background:#15251c;border:1px solid #294b37;border-radius:9px;color:white}
+h2{font-size:19px;margin:22px 15px 12px}
+.categories{display:flex;gap:9px;overflow:auto;padding:0 15px 10px}
+.cat{padding:10px 16px;background:#172b20;border:1px solid #315c40;border-radius:20px;white-space:nowrap;color:white}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:0 15px}
+.card{background:#13231a;border:1px solid #274832;border-radius:13px;overflow:hidden}
+.cover{height:115px;display:flex;align-items:center;justify-content:center;font-size:55px;background:linear-gradient(140deg,#1d633e,#10271a)}
+.info{padding:12px}
+.info b{font-size:15px}
+.info p{font-size:12px;color:#a8c2af}
+.play{width:100%;padding:10px;background:#22c878;border:0;border-radius:7px;font-weight:bold;color:#042012}
+footer{text-align:center;padding:25px;color:#9ab5a1}
+.hidden{display:none}
 </style>
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
-</script>
 </head>
 <body>
-<header>⚽ SK FOOTBALL 3D</header>
-<div id="score"><span>SK <b id="a">0</b></span><span id="clock">03:00</span><span>AI <b id="b">0</b></span></div>
-<div id="game"></div>
-<div id="controls">
-<button id="left">◀</button>
-<button id="forward">▲</button>
-<button id="right">▶</button>
-<button id="shoot">SHOOT</button>
+<header>
+<div class="logo">⚡ SK GAMING</div>
+<div class="coins">🪙 <span id="coins">1000</span></div>
+</header>
+
+<nav>
+<a href="#">Home</a><a href="#games">All Games</a>
+<a href="#sports">Sports</a><a href="#profile">Profile</a>
+</nav>
+
+<section class="hero">
+<h1>WELCOME TO SK GAMING</h1>
+<p>Play Games. Earn Virtual Points. Challenge Yourself.</p>
+<button onclick="document.querySelector('#games').scrollIntoView({behavior:'smooth'})">EXPLORE GAMES</button>
+</section>
+
+<input class="search" id="search" placeholder="🔍 Search your favorite game..." oninput="filterGames()">
+
+<h2>GAME CATEGORIES</h2>
+<div class="categories">
+<button class="cat" onclick="category('all')">All</button>
+<button class="cat" onclick="category('sports')">Sports</button>
+<button class="cat" onclick="category('racing')">Racing</button>
+<button class="cat" onclick="category('arcade')">Arcade</button>
 </div>
-<script type="module">
-import * as THREE from 'three';
-const root=document.querySelector('#game');
-const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x82b8dc);
-const camera=new THREE.PerspectiveCamera(50,root.clientWidth/root.clientHeight,.1,100);
-camera.position.set(0,25,25);
-camera.lookAt(0,0,0);
-const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(root.clientWidth,root.clientHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-root.appendChild(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xffffff,0x315b38,2));
-const light=new THREE.DirectionalLight(0xffffff,2);
-light.position.set(-8,18,8);scene.add(light);
-const green=new THREE.MeshStandardMaterial({color:0x167b3c});
-const white=new THREE.MeshStandardMaterial({color:0xffffff});
-const field=new THREE.Mesh(new THREE.PlaneGeometry(22,34),green);
-field.rotation.x=-Math.PI/2;scene.add(field);
-function line(w,d,x,z){
- const o=new THREE.Mesh(new THREE.BoxGeometry(w,.035,d),white);
- o.position.set(x,.03,z);scene.add(o);
+
+<h2 id="games">FEATURED GAMES</h2>
+<div class="games" id="gameList">
+
+<div class="card" data-type="sports" data-name="football">
+<div class="cover">⚽</div><div class="info">
+<b>Football 3D</b><p>Sports • Virtual points</p>
+<button class="play" onclick="playGame('Football 3D')">PLAY NOW</button>
+</div></div>
+
+<div class="card" data-type="racing" data-name="car racing">
+<div class="cover">🏎️</div><div class="info">
+<b>Car Racing</b><p>Racing • Virtual points</p>
+<button class="play" onclick="playGame('Car Racing')">PLAY NOW</button>
+</div></div>
+
+<div class="card" data-type="sports" data-name="cricket">
+<div class="cover">🏏</div><div class="info">
+<b>Cricket Challenge</b><p>Sports • Virtual points</p>
+<button class="play" onclick="playGame('Cricket Challenge')">PLAY NOW</button>
+</div></div>
+
+<div class="card" data-type="sports" data-name="basketball">
+<div class="cover">🏀</div><div class="info">
+<b>Basketball</b><p>Sports • Virtual points</p>
+<button class="play" onclick="playGame('Basketball')">PLAY NOW</button>
+</div></div>
+
+<div class="card" data-type="arcade" data-name="memory match">
+<div class="cover">🧠</div><div class="info">
+<b>Memory Match</b><p>Arcade • Virtual points</p>
+<button class="play" onclick="playGame('Memory Match')">PLAY NOW</button>
+</div></div>
+
+<div class="card" data-type="arcade" data-name="puzzle">
+<div class="cover">🧩</div><div class="info">
+<b>Puzzle Quest</b><p>Arcade • Virtual points</p>
+<button class="play" onclick="playGame('Puzzle Quest')">PLAY NOW</button>
+</div></div>
+
+</div>
+
+<div id="profile">
+<h2>PLAYER PROFILE</h2>
+<p style="padding:0 15px;color:#b8d4c0">SK Player • Virtual balance: <span id="balance">1000</span> coins</p>
+</div>
+<footer>SK GAMING © 2026<br>Play Fair • Have Fun</footer>
+
+<script>
+let balance=1000;
+function playGame(name){
+ alert(name+" নির্বাচিত হয়েছে। গেমটি পরবর্তী ধাপে যুক্ত করা হবে!");
 }
-line(22,.1,0,-17);line(22,.1,0,17);
-line(.1,34,-11,0);line(.1,34,11,0);line(22,.1,0,0);
-const circle=new THREE.Mesh(new THREE.TorusGeometry(3,.05,8,48),white);
-circle.rotation.x=Math.PI/2;circle.position.y=.04;scene.add(circle);
-function goal(z){
- const g=new THREE.Group();
- function bar(w,h,d,x,y){
-  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),white);
-  m.position.set(x,y,0);g.add(m);
- }
- bar(.15,2.5,.15,-3.5,1.25);bar(.15,2.5,.15,3.5,1.25);bar(7.15,.15,.15,0,2.5);
- g.position.z=z;scene.add(g);
+function category(type){
+ document.querySelectorAll('.card').forEach(c=>{
+ c.classList.toggle('hidden',type!=='all'&&c.dataset.type!==type);
+ });
 }
-goal(-17);goal(17);
-function person(color,x,z){
- const group=new THREE.Group();
- const shirt=new THREE.MeshStandardMaterial({color});
- const body=new THREE.Mesh(new THREE.CapsuleGeometry(.45,.75,5,12),shirt);
- body.position.y=1.25;group.add(body);
- const head=new THREE.Mesh(new THREE.SphereGeometry(.25,16,16),new THREE.MeshStandardMaterial({color:0xe6b68f}));
- head.position.y=2.05;group.add(head);
- for(const side of [-1,1]){
-  const leg=new THREE.Mesh(new THREE.CapsuleGeometry(.13,.65,4,8),new THREE.MeshStandardMaterial({color:0x202020}));
-  leg.position.set(side*.2,.4,0);group.add(leg);
- }
- group.position.set(x,0,z);scene.add(group);return group;
+function filterGames(){
+ const q=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>{
+ c.classList.toggle('hidden',!c.dataset.name.includes(q));
+ });
 }
-const hero=person(0x10db7a,0,8);
-const enemy=person(0xe83a43,1,-8);
-const ball=new THREE.Mesh(new THREE.SphereGeometry(.28,24,18),new THREE.MeshStandardMaterial({color:0xffffff}));
-ball.position.set(0,.3,0);scene.add(ball);
-let score=0,seconds=180,move={left:false,right:false,forward:false};
-function bind(id,key){
- const el=document.querySelector('#'+id);
- el.onpointerdown=e=>{e.preventDefault();move[key]=true};
- el.onpointerup=el.onpointercancel=()=>move[key]=false;
-}
-bind('left','left');bind('right','right');bind('forward','forward');
-let velocity=new THREE.Vector3();
-document.querySelector('#shoot').onclick=()=>{
- const d=ball.position.distanceTo(hero.position);
- if(d<2.2){velocity.set(hero.position.x*.15,1,-12)}
-};
-function animate(){
- requestAnimationFrame(animate);
- if(move.left)hero.position.x-=.12;
- if(move.right)hero.position.x+=.12;
- if(move.forward)hero.position.z-=.12;
- hero.position.x=THREE.MathUtils.clamp(hero.position.x,-10,10);
- hero.position.z=THREE.MathUtils.clamp(hero.position.z,-15,15);
- if(hero.position.distanceTo(ball.position)<1.15){
-  if(move.left)velocity.x-=.02;
-  if(move.right)velocity.x+=.02;
-  if(move.forward)velocity.z-=.08;
- }
- velocity.y-=.012;
- ball.position.add(velocity);
- if(ball.position.y<.28){ball.position.y=.28;velocity.y=Math.abs(velocity.y)*.35}
- velocity.multiplyScalar(.99);
- if(Math.abs(ball.position.x)>10)velocity.x*=-.6;
- if(Math.abs(ball.position.z)>17){
-  if(Math.abs(ball.position.x)<3.5){
-   score++;document.querySelector('#a').textContent=score;
-   ball.position.set(0,.3,0);velocity.set(0,0,0);
-  }else velocity.z*=-.6;
- }
- enemy.position.x+=Math.sign(ball.position.x-enemy.position.x)*.025;
- enemy.position.z+=Math.sign(ball.position.z-enemy.position.z)*.025;
- camera.position.x+=(hero.position.x*.3-camera.position.x)*.02;
- camera.position.z+=(hero.position.z+17-camera.position.z)*.02;
- camera.lookAt(hero.position.x*.2,0,0);
- renderer.render(scene,camera);
-}
-setInterval(()=>{
- if(seconds>0){seconds--;document.querySelector('#clock').textContent=
- String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
-},1000);
-animate();
-window.onresize=()=>{
- camera.aspect=root.clientWidth/root.clientHeight;camera.updateProjectionMatrix();
- renderer.setSize(root.clientWidth,root.clientHeight);
-};
 </script>
 </body>
 </html>

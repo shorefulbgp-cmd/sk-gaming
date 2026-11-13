@@ -3,15 +3,15 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SK GAMING - 3D SPACE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SK GAMING</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#050711;color:white;font-family:Arial,sans-serif}
 header{padding:15px;background:#101a2b;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:22px;color:#32f2a0;font-weight:bold}
-main{max-width:950px;margin:auto;padding:15px}
-button{border:0;border-radius:10px;padding:13px 18px;font-weight:bold;cursor:pointer;background:#28e69a;color:#06251b}
+main{max-width:1150px;margin:auto;padding:15px}
+button{border:0;border-radius:9px;padding:12px 16px;font-weight:bold;cursor:pointer;background:#28e69a;color:#06251b}
 button:active{transform:scale(.96)}
 .back{background:#28374d;color:white}
 .hero{background:linear-gradient(130deg,#123a3b,#171d40);padding:24px;border-radius:16px;margin-bottom:20px}
@@ -20,7 +20,7 @@ button:active{transform:scale(.96)}
 .emoji{font-size:40px}
 .small{font-size:13px;color:#b8c6d8;line-height:1.6}
 .section{display:none}
-#stage{height:65vh;min-height:390px;max-height:650px;background:#01020a;position:relative;overflow:hidden;border-radius:15px;border:1px solid #34455d}
+#stage{height:60vh;min-height:360px;max-height:620px;background:#01020a;position:relative;overflow:hidden;border-radius:15px;border:1px solid #34455d}
 #stage canvas{display:block;width:100%;height:100%}
 .hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:5px;pointer-events:none}
 .stat{background:#091326dd;border:1px solid #354d68;border-radius:8px;padding:9px;font-size:12px}
@@ -29,14 +29,23 @@ button:active{transform:scale(.96)}
 .controls{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
 .move{background:#253d5a;color:white;font-size:22px;width:75px;height:55px;touch-action:none}
 #restart{background:#ffc24d}
-.card{background:#142237;border-radius:14px;padding:18px;margin:12px 0}
+.challenge-layout{display:grid;grid-template-columns:175px minmax(0,1fr) 175px;gap:12px;align-items:stretch;margin:15px 0}
+.challenge-panel{background:#111e32;border:1px solid #344b69;border-radius:13px;padding:13px}
+.challenge-panel h3{font-size:15px;color:#42edaa}
+.challenge-option{display:block;width:100%;margin:9px 0;background:#243954;color:white}
+.challenge-option.selected{background:#16865d}
+.challenge-info{background:#091326;padding:12px;border-radius:9px;margin-top:10px;font-size:13px;line-height:1.7}
 .footer{text-align:center;color:#8c9db2;padding:25px}
+@media(max-width:700px){
+ .challenge-layout{grid-template-columns:1fr}
+ .challenge-panel{width:100%}
+}
 </style>
 </head>
 <body>
 <header>
  <div class="logo">⚡ SK GAMING</div>
- <div>🪙 <span id="coins">1000</span></div>
+ <div>🪙 <span id="homeCoins">1000</span></div>
 </header>
 
 <main>
@@ -49,7 +58,8 @@ button:active{transform:scale(.96)}
  <h2>🎮 GAME ZONE</h2>
  <div class="games">
   <div class="game">
-   <div class="emoji">🚀</div><h3>SPACE FLIGHT</h3>
+   <div class="emoji">🚀</div>
+   <h3>SPACE FLIGHT</h3>
    <p class="small">3D Rocket Adventure</p>
    <button onclick="openGame()">PLAY NOW</button>
   </div>
@@ -63,26 +73,61 @@ button:active{transform:scale(.96)}
 <section id="flight" class="section">
  <button class="back" onclick="goHome()">← HOME</button>
  <h2>🚀 3D SPACE FLIGHT</h2>
- <div id="stage">
-  <div class="hud">
-   <div class="stat">SCORE: <b id="score">0</b></div>
-   <div class="stat">RISE: <b id="mult">1.00</b>x</div>
-   <div class="stat">TIME: <b id="time">0</b>s</div>
+
+ <div class="challenge-layout">
+  <div class="challenge-panel">
+   <h3>🎯 CHALLENGE ZONE</h3>
+   <p class="small">চ্যালেঞ্জ নির্বাচন করুন</p>
+   <button class="challenge-option" onclick="joinChallenge(5,20,this)">৫ সেকেন্ড<br>⭐ ২০ পয়েন্ট</button>
+   <button class="challenge-option selected" onclick="joinChallenge(10,50,this)">১০ সেকেন্ড<br>⭐ ৫০ পয়েন্ট</button>
+   <button class="challenge-option" onclick="joinChallenge(15,100,this)">১৫ সেকেন্ড<br>⭐ ১০০ পয়েন্ট</button>
+   <div class="challenge-info">কোনো কয়েন কাটা হবে না।</div>
   </div>
-  <div id="message">
-   <div class="panel">
-    <h2>🚀 SPACE MISSION</h2>
-    <p>রকেট চালান, তারা সংগ্রহ করুন এবং বাধা এড়িয়ে চলুন।</p>
-    <button onclick="startGame()">START GAME</button>
+
+  <div>
+   <div class="challenge-info">
+    <h3>🚀 SPACE CRASH</h3>
+    <p>নির্ধারিত সময় পর্যন্ত উড়ে চ্যালেঞ্জ সম্পন্ন করুন।</p>
+    <p>চ্যালেঞ্জ: <b id="challengeTarget">১০ সেকেন্ড</b></p>
+    <p>পুরস্কার: ⭐ <b id="challengeReward">৫০</b> পয়েন্ট</p>
+    <p id="challengeStatus">চ্যালেঞ্জ নির্বাচন করুন</p>
+   </div>
+
+   <div id="stage">
+    <div class="hud">
+     <div class="stat">SCORE: <b id="score">0</b></div>
+     <div class="stat">RISE: <b id="mult">1.00</b>x</div>
+     <div class="stat">TIME: <b id="time">0</b>s</div>
+    </div>
+    <div id="message">
+     <div class="panel">
+      <h2>🚀 SPACE MISSION</h2>
+      <p>রকেট চালান, তারা সংগ্রহ করুন এবং বাধা এড়িয়ে চলুন।</p>
+      <button onclick="startGame()">START GAME</button>
+     </div>
+    </div>
+   </div>
+
+   <div class="controls">
+    <button class="move" id="left">◀</button>
+    <button id="restart" onclick="startGame()">RESTART</button>
+    <button class="move" id="right">▶</button>
    </div>
   </div>
+
+  <div class="challenge-panel">
+   <h3>🪙 VIRTUAL WALLET</h3>
+   <div class="challenge-info">
+    মোট কয়েন
+    <h2 id="virtualBalance">1000</h2>
+    <hr>
+    অর্জিত পয়েন্ট
+    <h2 id="earnedPoints">0</h2>
+   </div>
+   <p class="small">শুধু ভার্চুয়াল পয়েন্ট। বাস্তব টাকার মূল্য নেই।</p>
+  </div>
  </div>
- <div class="controls">
-  <button class="move" id="left">◀</button>
-  <button id="restart" onclick="startGame()">RESTART</button>
-  <button class="move" id="right">▶</button>
- </div>
- <p class="small">বাম ও ডান বোতাম ধরে রকেট চালান। এটি একটি ভার্চুয়াল পয়েন্টের আর্কেড গেম।</p>
+ <p class="small">মোবাইলে বাম ও ডান বোতাম ধরে রকেট চালান। কম্পিউটারে Arrow Key ব্যবহার করুন।</p>
 </section>
 </main>
 
@@ -108,81 +153,81 @@ const scoreEl=document.getElementById("score");
 const multEl=document.getElementById("mult");
 const timeEl=document.getElementById("time");
 
-let scene,camera,renderer,rocket,flame,stars,nebula;
+let scene,camera,renderer,rocket,flame,stars;
 let particles=[],rocks=[],collectibles=[];
 let running=false,elapsed=0,score=0,last=0,raf;
 let sound;
+let virtualBalance=1000,earnedPoints=0;
+let challengeTarget=10,challengeReward=50;
+let challengeSelected=false,challengeComplete=false;
 const keys={left:false,right:false};
+
+function updateWallet(){
+ document.getElementById("virtualBalance").textContent=virtualBalance;
+ document.getElementById("earnedPoints").textContent=earnedPoints;
+ document.getElementById("homeCoins").textContent=virtualBalance;
+}
+
+function joinChallenge(seconds,reward,button){
+ challengeTarget=seconds;
+ challengeReward=reward;
+ challengeSelected=true;
+ challengeComplete=false;
+ document.getElementById("challengeTarget").textContent=seconds+" সেকেন্ড";
+ document.getElementById("challengeReward").textContent=reward;
+ document.getElementById("challengeStatus").textContent="চ্যালেঞ্জ নির্বাচিত! START GAME চাপুন।";
+ document.querySelectorAll(".challenge-option").forEach(b=>b.classList.remove("selected"));
+ button.classList.add("selected");
+}
+window.joinChallenge=joinChallenge;
 
 function initGame(){
  if(renderer){resize();return}
  scene=new THREE.Scene();
  scene.background=new THREE.Color(0x01020b);
  scene.fog=new THREE.FogExp2(0x01020b,.0025);
-
  camera=new THREE.PerspectiveCamera(60,1,.1,400);
  camera.position.set(-7,-2,17);
-
  renderer=new THREE.WebGLRenderer({antialias:true});
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
  stage.insertBefore(renderer.domElement,stage.firstChild);
-
  scene.add(new THREE.AmbientLight(0x8799ff,1.3));
-
  let glow=new THREE.PointLight(0x3b69ff,8,80);
  glow.position.set(0,10,8);scene.add(glow);
 
- // Space stars
  let pos=[];
- for(let i=0;i<2400;i++){
+ for(let i=0;i<2400;i++)
   pos.push((Math.random()-.5)*150,(Math.random()-.5)*180,-Math.random()*90);
- }
  let sg=new THREE.BufferGeometry();
  sg.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
- stars=new THREE.Points(sg,new THREE.PointsMaterial({
-  color:0xffffff,size:.16,transparent:true,opacity:.95
- }));
+ stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.16}));
  scene.add(stars);
 
- // Nebula clouds
- const cloudMat=new THREE.MeshBasicMaterial({
-  color:0x27115b,transparent:true,opacity:.13,side:THREE.DoubleSide
- });
  for(let i=0;i<9;i++){
-  const cloud=new THREE.Mesh(new THREE.CircleGeometry(5+Math.random()*6,40),cloudMat);
+  let cloud=new THREE.Mesh(new THREE.CircleGeometry(5+Math.random()*6,40),
+   new THREE.MeshBasicMaterial({color:0x27115b,transparent:true,opacity:.13,side:THREE.DoubleSide}));
   cloud.position.set((Math.random()-.5)*45,(Math.random()-.5)*80,-25-Math.random()*25);
   scene.add(cloud);
  }
 
  rocket=new THREE.Group();
  const white=new THREE.MeshStandardMaterial({color:0xe6edf8,metalness:.65,roughness:.25});
- const red=new THREE.MeshStandardMaterial({color:0xff3434,metalness:.3});
- const body=new THREE.Mesh(new THREE.CylinderGeometry(.42,.48,2.3,28),white);
- rocket.add(body);
-
+ const red=new THREE.MeshStandardMaterial({color:0xff3434});
+ rocket.add(new THREE.Mesh(new THREE.CylinderGeometry(.42,.48,2.3,28),white));
  let nose=new THREE.Mesh(new THREE.ConeGeometry(.42,.9,28),red);
  nose.position.y=1.6;rocket.add(nose);
-
  let glass=new THREE.Mesh(new THREE.SphereGeometry(.2,24,20),
   new THREE.MeshStandardMaterial({color:0x19caff,metalness:.5,roughness:.12}));
  glass.position.set(0,.4,.42);rocket.add(glass);
-
  for(let i=0;i<3;i++){
   let fin=new THREE.Mesh(new THREE.BoxGeometry(.17,.8,.6),red);
   let a=i*Math.PI*2/3;
   fin.position.set(Math.sin(a)*.43,-.7,Math.cos(a)*.43);
   fin.rotation.y=a;rocket.add(fin);
  }
-
  flame=new THREE.Mesh(new THREE.ConeGeometry(.32,1.5,24),
   new THREE.MeshBasicMaterial({color:0xff7100}));
- flame.position.y=-1.9;flame.rotation.z=Math.PI;
- rocket.add(flame);
-
- const innerFlame=new THREE.Mesh(new THREE.ConeGeometry(.15,1,20),
-  new THREE.MeshBasicMaterial({color:0xffee68}));
- innerFlame.position.y=-1.72;innerFlame.rotation.z=Math.PI;
- rocket.add(innerFlame);
+ flame.position.y=-1.9;flame.rotation.z=Math.PI;rocket.add(flame);
  scene.add(rocket);
  resize();
  window.addEventListener("resize",resize);
@@ -194,33 +239,28 @@ function resize(){
  camera.updateProjectionMatrix();
  renderer.setSize(stage.clientWidth,stage.clientHeight,false);
 }
-
 function clearWorld(){
  [...particles,...rocks,...collectibles].forEach(o=>scene.remove(o));
  particles=[];rocks=[];collectibles=[];
 }
-
 function makeRock(){
- const r=new THREE.Mesh(new THREE.DodecahedronGeometry(.65+Math.random()*.5,1),
+ let r=new THREE.Mesh(new THREE.DodecahedronGeometry(.65+Math.random()*.5,1),
  new THREE.MeshStandardMaterial({color:0x737d8d,roughness:1}));
  r.position.set((Math.random()-.5)*12,rocket.position.y+19,-2);
  scene.add(r);rocks.push(r);
 }
 function makeCoin(){
- const c=new THREE.Mesh(new THREE.IcosahedronGeometry(.35,1),
+ let c=new THREE.Mesh(new THREE.IcosahedronGeometry(.35,1),
  new THREE.MeshStandardMaterial({color:0xffd34e,emissive:0x8a4b00}));
  c.position.set((Math.random()-.5)*10,rocket.position.y+15,-2);
  scene.add(c);collectibles.push(c);
 }
-
 function explosionSound(){
  try{
   if(!sound)sound=new AudioContext();
   if(sound.state==="suspended")sound.resume();
-  let t=sound.currentTime;
-  let osc=sound.createOscillator(),gain=sound.createGain();
-  osc.type="sawtooth";
-  osc.frequency.setValueAtTime(130,t);
+  let t=sound.currentTime,osc=sound.createOscillator(),gain=sound.createGain();
+  osc.type="sawtooth";osc.frequency.setValueAtTime(130,t);
   osc.frequency.exponentialRampToValueAtTime(30,t+.8);
   gain.gain.setValueAtTime(.001,t);
   gain.gain.linearRampToValueAtTime(.22,t+.03);
@@ -229,7 +269,6 @@ function explosionSound(){
   osc.start(t);osc.stop(t+.9);
  }catch(e){}
 }
-
 function explode(){
  for(let i=0;i<230;i++){
   let p=new THREE.Mesh(new THREE.SphereGeometry(.045+Math.random()*.09,7,7),
@@ -244,60 +283,61 @@ function explode(){
  setTimeout(()=>scene.remove(light),500);
  explosionSound();
 }
-
 function startGame(){
  initGame();clearWorld();
  rocket.position.set(-5,-5,0);
  rocket.rotation.z=-.3;
  camera.position.set(-7,-2,17);
- score=0;elapsed=0;running=true;
+ score=0;elapsed=0;running=true;challengeComplete=false;
  scoreEl.textContent="0";timeEl.textContent="0";multEl.textContent="1.00";
+ document.getElementById("challengeStatus").textContent="চ্যালেঞ্জ চলছে...";
  msg.style.display="none";
  last=performance.now();
  cancelAnimationFrame(raf);
  raf=requestAnimationFrame(loop);
 }
-
 function finishGame(){
  if(!running)return;
- running=false;explode();
+ running=false;
+ if(challengeSelected && elapsed>=challengeTarget){
+  challengeComplete=true;
+  virtualBalance+=challengeReward;
+  earnedPoints+=challengeReward;
+  updateWallet();
+  document.getElementById("challengeStatus").textContent="🎉 সফল! "+challengeReward+" পয়েন্ট অর্জিত!";
+ }else{
+  document.getElementById("challengeStatus").textContent="চ্যালেঞ্জ সম্পন্ন হয়নি। আবার চেষ্টা করুন!";
+ }
+ explode();
  msg.style.display="flex";
- msg.innerHTML=`<div class="panel"><h2>💥 FLIGHT COMPLETE</h2><p>আপনার স্কোর: <b>${score}</b></p><button onclick="startGame()">PLAY AGAIN</button></div>`;
+ msg.innerHTML=`<div class="panel"><h2>💥 FLIGHT COMPLETE</h2><p>স্কোর: <b>${score}</b></p><p>${challengeComplete?"🎉 চ্যালেঞ্জ সফল!":"আবার চেষ্টা করুন!"}</p><button onclick="startGame()">PLAY AGAIN</button></div>`;
  raf=requestAnimationFrame(particleLoop);
 }
-
 function particleLoop(){
  let alive=false;
  for(let i=particles.length-1;i>=0;i--){
   let p=particles[i];
   p.position.addScaledVector(p.userData.v,.025);
-  p.userData.v.y-=.06;
-  p.userData.life-=.025;
-  p.scale.multiplyScalar(.99);
+  p.userData.v.y-=.06;p.userData.life-=.025;p.scale.multiplyScalar(.99);
   if(p.userData.life<=0){scene.remove(p);particles.splice(i,1)}
   else alive=true;
  }
  renderer.render(scene,camera);
  if(alive)raf=requestAnimationFrame(particleLoop);
 }
-
 function loop(now){
  if(!running)return;
  let dt=Math.min((now-last)/1000,.04);last=now;
  elapsed+=dt;
-
  let move=(keys.right?1:0)-(keys.left?1:0);
  rocket.position.x+=move*4*dt+1.4*dt;
  rocket.position.y+=2.7*dt;
  rocket.rotation.z=THREE.MathUtils.lerp(rocket.rotation.z,-.25,.04);
-
  flame.scale.y=.7+Math.random()*.8;
  flame.scale.x=.7+Math.random()*.4;
-
  camera.position.x=THREE.MathUtils.lerp(camera.position.x,rocket.position.x-2,.06);
  camera.position.y=THREE.MathUtils.lerp(camera.position.y,rocket.position.y-1,.06);
  camera.lookAt(rocket.position.x+2,rocket.position.y+2,-3);
-
  stars.rotation.z+=dt*.001;
  if(Math.random()<dt*2.2)makeCoin();
  if(Math.random()<dt*.65)makeRock();
@@ -315,16 +355,13 @@ function loop(now){
    scene.remove(c);collectibles.splice(i,1);
   }
  }
-
  scoreEl.textContent=score;
  timeEl.textContent=Math.floor(elapsed);
  multEl.textContent=(1+elapsed*.12).toFixed(2);
  renderer.render(scene,camera);
-
  if(elapsed>=18){finishGame();return}
  raf=requestAnimationFrame(loop);
 }
-
 function stopGame(){running=false;cancelAnimationFrame(raf)}
 function bind(id,side){
  let el=document.getElementById(id);
@@ -343,6 +380,7 @@ window.addEventListener("keyup",e=>{
 window.initGame=initGame;
 window.startGame=startGame;
 window.stopGame=stopGame;
+updateWallet();
 </script>
 </body>
 </html>

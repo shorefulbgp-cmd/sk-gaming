@@ -3,186 +3,215 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>SK GAMING - Rocket Flight</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SK GAMING</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07111c;color:white;font-family:Arial,sans-serif}
-header{padding:15px 18px;background:#101e2b;display:flex;justify-content:space-between;align-items:center}
-.logo{color:#36e99a;font-weight:900;font-size:23px}
-button{border:0;border-radius:10px;padding:13px 19px;font-weight:bold;background:#27df91;color:#062014}
+body{margin:0;background:#07111b;color:white;font-family:Arial,sans-serif}
+header{background:#101e2c;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:900;color:#36e99a}
 main{max-width:950px;margin:auto;padding:16px}
-.hero{padding:25px;border-radius:17px;background:linear-gradient(130deg,#104c3b,#142a49);margin-bottom:18px}
-.hero h1{margin:0 0 8px}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px}
-.game{background:#142331;padding:17px;border:1px solid #294253;border-radius:15px}
-.emoji{font-size:43px}
-.game h3{margin:9px 0}
-.small{color:#b7c8d5;font-size:13px;line-height:1.5}
-#flight{display:none}
-#stage{height:65vh;min-height:390px;max-height:650px;position:relative;border-radius:14px;overflow:hidden;background:#72bce9}
-#stage canvas{display:block;width:100%;height:100%;touch-action:none}
-.hud{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
-.stat{background:#071522c9;padding:9px 12px;border-radius:10px;font-weight:bold}
-#message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:#06111b99;padding:20px}
-.panel{background:#102333ed;border:1px solid #527186;padding:24px;border-radius:16px;max-width:310px}
-.panel h2{margin-top:0}
-#controls{display:flex;justify-content:space-between;gap:15px;margin-top:14px}
-.move{width:90px;height:65px;font-size:22px;background:#243d50;color:white;touch-action:none}
-#homeBtn{background:#263d50;color:white}
+button{border:0;border-radius:9px;padding:12px 17px;background:#25d990;color:#052216;font-weight:bold;cursor:pointer}
+.hero{padding:25px;background:linear-gradient(130deg,#104b39,#142c50);border-radius:16px;margin-bottom:20px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.game{background:#142331;border:1px solid #294253;border-radius:14px;padding:16px}
+.emoji{font-size:42px}
+.small{font-size:13px;color:#b9c9d4;line-height:1.5}
+.section{display:none}
+.payment-card{background:#182b3b;padding:18px;border-radius:12px;margin:13px 0}
+.payment-card a{color:#6edcff}
+#stage{height:62vh;min-height:390px;max-height:650px;position:relative;border-radius:14px;overflow:hidden;background:#75bde9}
+#stage canvas{width:100%;height:100%;display:block}
+.hud{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none;gap:8px}
+.stat{background:#071522d9;padding:10px;border-radius:9px;font-weight:bold}
+#message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#06111b99;text-align:center;padding:20px}
+.panel{background:#102333ed;padding:22px;border-radius:15px;max-width:300px}
+.controls{display:flex;justify-content:space-between;margin-top:14px;gap:10px}
+.move{background:#263d50;color:white;width:85px;height:60px;font-size:22px;touch-action:none}
+.back{background:#263d50;color:white;margin-bottom:12px}
 </style>
 </head>
 <body>
+
 <header>
  <div class="logo">⚡ SK GAMING</div>
  <div>🪙 <span id="coins">1000</span></div>
 </header>
 
 <main>
+
 <section id="home">
  <div class="hero">
   <h1>WELCOME TO SK GAMING</h1>
   <p>Play • Challenge • Enjoy</p>
-  <p class="small">ভার্চুয়াল পয়েন্টের নিরাপদ গেমিং প্ল্যাটফর্ম।</p>
+  <p class="small">Your Virtual Gaming World</p>
+  <button onclick="showPayment()">💳 PAYMENT INFORMATION</button>
  </div>
+
  <h2>🎮 GAME ZONE</h2>
  <div class="games">
   <div class="game">
    <div class="emoji">🚀</div>
    <h3>3D Rocket Flight</h3>
-   <p class="small">আকাশে উড়ুন, তারা সংগ্রহ করুন, বাধা এড়িয়ে চলুন।</p>
+   <p class="small">আকাশে উড়ুন, তারা সংগ্রহ করুন, বাধা এড়ান।</p>
    <button onclick="openFlight()">PLAY NOW</button>
   </div>
   <div class="game">
    <div class="emoji">⚽</div>
    <h3>Football</h3>
    <p class="small">Football game</p>
-   <p class="small">পরবর্তী আপডেটে যুক্ত হবে</p>
+   <button onclick="comingSoon()">PLAY</button>
   </div>
   <div class="game">
    <div class="emoji">🏎️</div>
    <h3>Car Racing</h3>
-   <p class="small">Coming soon</p>
+   <p class="small">Racing game</p>
+   <button onclick="comingSoon()">PLAY</button>
   </div>
   <div class="game">
    <div class="emoji">🏏</div>
    <h3>Cricket</h3>
+   <p class="small">Cricket game</p>
+   <button onclick="comingSoon()">PLAY</button>
+  </div>
+  <div class="game">
+   <div class="emoji">🏀</div>
+   <h3>Basketball</h3>
    <p class="small">Coming soon</p>
   </div>
  </div>
 </section>
 
-<section id="flight">
- <button id="homeBtn" onclick="goHome()">← HOME</button>
+<section id="payment" class="section">
+ <button class="back" onclick="goHome()">← HOME</button>
+ <h2>💳 SK GAMING PAYMENT INFORMATION</h2>
+ <div class="payment-card">
+  <h2 style="color:#e85b91">বিকাশ (bKash)</h2>
+  <p>বিকাশের অফিসিয়াল তথ্য ও সেবা।</p>
+  <a href="https://www.bkash.com/" target="_blank">বিকাশ অফিসিয়াল ওয়েবসাইট</a>
+ </div>
+ <div class="payment-card">
+  <h2 style="color:#ff9b42">নগদ (Nagad)</h2>
+  <p>নগদের অফিসিয়াল তথ্য ও সেবা।</p>
+  <a href="https://nagad.com.bd/" target="_blank">নগদ অফিসিয়াল ওয়েবসাইট</a>
+ </div>
+ <p class="small">এই পেজ শুধু তথ্য প্রদর্শন করে। এখানে কোনো টাকা জমা, বাজি বা ক্যাশ আউট নেই।</p>
+</section>
+
+<section id="flight" class="section">
+ <button class="back" onclick="goHome()">← HOME</button>
  <h2>🚀 3D ROCKET FLIGHT</h2>
  <div id="stage">
   <div class="hud">
    <div class="stat">⭐ SCORE: <span id="score">0</span></div>
-   <div class="stat">☁️ ALTITUDE: <span id="altitude">0</span> m</div>
+   <div class="stat">ALTITUDE: <span id="altitude">0</span> m</div>
   </div>
   <div id="message">
    <div class="panel">
     <h2>🚀 ROCKET FLIGHT</h2>
-    <p>আকাশে উড়ুন, তারা সংগ্রহ করুন এবং বাধা এড়িয়ে চলুন!</p>
+    <p>রকেট চালান, তারা সংগ্রহ করুন, পাথর এড়িয়ে চলুন!</p>
     <button onclick="startFlight()">START GAME</button>
    </div>
   </div>
  </div>
- <div id="controls">
+ <div class="controls">
   <button class="move" id="left">◀</button>
   <button class="move" id="right">▶</button>
-  <button id="homeBtn" onclick="goHome()">HOME</button>
+  <button onclick="startFlight()">RESTART</button>
  </div>
- <p class="small">মোবাইলে বাম ও ডান বাটন ধরে রকেট চালান। কম্পিউটারে ← → Arrow ব্যবহার করুন। তারা সংগ্রহ করুন এবং পাথর এড়িয়ে চলুন।</p>
+ <p class="small">বাম ও ডান বাটন ধরে রকেট চালান। কম্পিউটারে Arrow Key ব্যবহার করুন।</p>
 </section>
+
 </main>
+
+<script>
+function hideSections(){
+ ["home","payment","flight"].forEach(id=>{
+  document.getElementById(id).style.display="none";
+ });
+}
+function goHome(){
+ if(window.stopFlight)stopFlight();
+ hideSections();
+ document.getElementById("home").style.display="block";
+}
+function showPayment(){
+ hideSections();
+ document.getElementById("payment").style.display="block";
+}
+function openFlight(){
+ hideSections();
+ document.getElementById("flight").style.display="block";
+ if(window.initWorld)initWorld();
+}
+function comingSoon(){
+ alert("এই গেমটি পরবর্তী সংস্করণে যুক্ত হবে।");
+}
+</script>
 
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
 </script>
+
 <script type="module">
 import * as THREE from "three";
 
-const home=document.getElementById("home");
-const flight=document.getElementById("flight");
 const stage=document.getElementById("stage");
 const message=document.getElementById("message");
-const scoreText=document.getElementById("score");
-const altitudeText=document.getElementById("altitude");
-
 let scene,camera,renderer,rocket,flame;
 let stars=[],rocks=[],clouds=[];
-let active=false,score=0,altitude=0;
-let direction=0,lastTime=0,spawnTimer=0;
-let animationId=null;
+let active=false,score=0,altitude=0,last=0,spawn=0;
+let direction=0,frame;
 const keys={};
 
-function openFlight(){
- home.style.display="none";
- flight.style.display="block";
- if(!renderer) createWorld();
- resize();
- message.style.display="flex";
-}
-
-function goHome(){
- active=false;
- message.style.display="none";
- flight.style.display="none";
- home.style.display="block";
-}
-
-function createWorld(){
+function initWorld(){
+ if(renderer){resize();return;}
  scene=new THREE.Scene();
  scene.background=new THREE.Color(0x75bce9);
  scene.fog=new THREE.Fog(0x75bce9,35,115);
-
- camera=new THREE.PerspectiveCamera(65,1,0.1,250);
+ camera=new THREE.PerspectiveCamera(65,1,.1,250);
  camera.position.set(0,4,10);
 
  renderer=new THREE.WebGLRenderer({antialias:true});
- renderer.setPixelRatio(Math.min(devicePixelRatio,2));
- renderer.shadowMap.enabled=true;
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
  stage.insertBefore(renderer.domElement,stage.firstChild);
 
  scene.add(new THREE.HemisphereLight(0xc9eaff,0x35435c,2));
- const sun=new THREE.DirectionalLight(0xffffff,2.5);
+ const sun=new THREE.DirectionalLight(0xffffff,2);
  sun.position.set(-5,10,8);
- sun.castShadow=true;
  scene.add(sun);
 
- // Rocket body
  rocket=new THREE.Group();
  const body=new THREE.Mesh(
-  new THREE.CylinderGeometry(.42,.55,2.2,24),
-  new THREE.MeshStandardMaterial({color:0xf1f4fa,metalness:.45,roughness:.3})
+  new THREE.CylinderGeometry(.42,.55,2.2,20),
+  new THREE.MeshStandardMaterial({color:0xf1f4fa,metalness:.4,roughness:.3})
  );
- body.castShadow=true;
  rocket.add(body);
 
  const nose=new THREE.Mesh(
-  new THREE.ConeGeometry(.42,.9,24),
-  new THREE.MeshStandardMaterial({color:0xe94343,metalness:.3,roughness:.35})
+  new THREE.ConeGeometry(.42,.9,20),
+  new THREE.MeshStandardMaterial({color:0xe94343})
  );
  nose.position.y=1.52;
  rocket.add(nose);
 
  const windowMesh=new THREE.Mesh(
-  new THREE.SphereGeometry(.2,20,16),
-  new THREE.MeshStandardMaterial({color:0x29a8ee,metalness:.5,roughness:.15})
+  new THREE.SphereGeometry(.2,16,12),
+  new THREE.MeshStandardMaterial({color:0x29a8ee,metalness:.5})
  );
  windowMesh.position.set(0,.45,.39);
  rocket.add(windowMesh);
 
- const finMaterial=new THREE.MeshStandardMaterial({color:0x2478d1,metalness:.35});
  for(let i=0;i<3;i++){
-  const fin=new THREE.Mesh(new THREE.BoxGeometry(.16,.8,.7),finMaterial);
+  const fin=new THREE.Mesh(
+   new THREE.BoxGeometry(.16,.8,.7),
+   new THREE.MeshStandardMaterial({color:0x2478d1})
+  );
   const a=i*Math.PI*2/3;
   fin.position.set(Math.sin(a)*.47,-.7,Math.cos(a)*.47);
   fin.rotation.y=a;
   rocket.add(fin);
  }
-
  flame=new THREE.Mesh(
   new THREE.ConeGeometry(.3,1.25,16),
   new THREE.MeshBasicMaterial({color:0xff8a19})
@@ -190,26 +219,23 @@ function createWorld(){
  flame.position.y=-1.65;
  flame.rotation.z=Math.PI;
  rocket.add(flame);
- rocket.position.set(0,0,0);
  scene.add(rocket);
 
- // Distant cloud groups
  for(let i=0;i<18;i++){
   const cloud=new THREE.Group();
   for(let j=0;j<5;j++){
    const puff=new THREE.Mesh(
-    new THREE.SphereGeometry(.8+Math.random()*.5,12,10),
-    new THREE.MeshStandardMaterial({color:0xffffff,roughness:1})
+    new THREE.SphereGeometry(.8+Math.random()*.5,10,8),
+    new THREE.MeshStandardMaterial({color:0xffffff})
    );
    puff.position.set(j*.75,.2+Math.random()*.3,0);
    puff.scale.y=.7;
    cloud.add(puff);
   }
-  cloud.position.set((Math.random()-.5)*28,(Math.random()-.5)*65, -12-Math.random()*35);
+  cloud.position.set((Math.random()-.5)*28,(Math.random()-.5)*65,-12-Math.random()*35);
   scene.add(cloud);
   clouds.push(cloud);
  }
-
  resize();
  window.addEventListener("resize",resize);
 }
@@ -223,153 +249,120 @@ function resize(){
 }
 
 function clearObjects(){
- for(const obj of [...stars,...rocks]){
-  scene.remove(obj);
- }
+ for(const o of [...stars,...rocks])scene.remove(o);
  stars=[];rocks=[];
 }
-
 function startFlight(){
+ initWorld();
  clearObjects();
- score=0;altitude=0;direction=0;spawnTimer=0;
+ score=0;altitude=0;spawn=0;
  rocket.position.set(0,0,0);
  camera.position.set(0,4,10);
- camera.lookAt(0,0,0);
- scoreText.textContent="0";
- altitudeText.textContent="0";
+ document.getElementById("score").textContent="0";
+ document.getElementById("altitude").textContent="0";
  active=true;
  message.style.display="none";
- lastTime=performance.now();
- cancelAnimationFrame(animationId);
- animationId=requestAnimationFrame(loop);
+ last=performance.now();
+ cancelAnimationFrame(frame);
+ frame=requestAnimationFrame(loop);
 }
-
 function makeStar(){
- const star=new THREE.Mesh(
+ const o=new THREE.Mesh(
   new THREE.IcosahedronGeometry(.45,1),
-  new THREE.MeshStandardMaterial({color:0xffdf45,emissive:0x8b5200,emissiveIntensity:.6})
+  new THREE.MeshStandardMaterial({color:0xffdf45,emissive:0x8b5200})
  );
- star.position.set((Math.random()-.5)*13,rocket.position.y+22,-2-Math.random()*5);
- scene.add(star);
- stars.push(star);
+ o.position.set((Math.random()-.5)*13,rocket.position.y+22,-2);
+ scene.add(o);stars.push(o);
 }
-
 function makeRock(){
- const rock=new THREE.Mesh(
-  new THREE.DodecahedronGeometry(.8+Math.random()*.55,1),
-  new THREE.MeshStandardMaterial({color:0x596775,roughness:1})
+ const o=new THREE.Mesh(
+  new THREE.DodecahedronGeometry(.85,1),
+  new THREE.MeshStandardMaterial({color:0x596775})
  );
- rock.position.set((Math.random()-.5)*13,rocket.position.y+25,-1);
- scene.add(rock);
- rocks.push(rock);
+ o.position.set((Math.random()-.5)*13,rocket.position.y+25,-1);
+ scene.add(o);rocks.push(o);
 }
-
-function endFlight(){
+function endGame(){
  active=false;
  message.style.display="flex";
- message.innerHTML=`
- <div class="panel">
-  <h2>🚀 FLIGHT OVER!</h2>
-  <p>আপনার স্কোর: <b>${score}</b></p>
-  <p>সংগৃহীত তারা: ⭐ ${Math.floor(score/10)}</p>
-  <button onclick="startFlight()">PLAY AGAIN</button>
+ message.innerHTML=`<div class="panel">
+ <h2>🚀 FLIGHT OVER</h2>
+ <p>আপনার স্কোর: <b>${score}</b></p>
+ <button onclick="startFlight()">PLAY AGAIN</button>
  </div>`;
 }
-
 function loop(now){
  if(!active)return;
- const dt=Math.min((now-lastTime)/1000,.04);
- lastTime=now;
-
- const left=keys.ArrowLeft||keys.a||keys.A;
- const right=keys.ArrowRight||keys.d||keys.D;
- direction=(right?1:0)-(left?1:0);
-
- rocket.position.x=THREE.MathUtils.clamp(
-  rocket.position.x+direction*8*dt,-6,6
- );
+ const dt=Math.min((now-last)/1000,.04);
+ last=now;
+ direction=(keys.ArrowRight?1:0)-(keys.ArrowLeft?1:0);
+ rocket.position.x=THREE.MathUtils.clamp(rocket.position.x+direction*8*dt,-6,6);
  rocket.position.y+=5*dt;
  altitude+=5*dt;
- altitudeText.textContent=Math.floor(altitude*10);
-
+ document.getElementById("altitude").textContent=Math.floor(altitude*10);
  flame.scale.y=.7+Math.random()*.7;
- flame.scale.x=.7+Math.random()*.5;
  rocket.rotation.z=THREE.MathUtils.lerp(rocket.rotation.z,-direction*.22,.1);
-
- // Follow camera
  camera.position.x=THREE.MathUtils.lerp(camera.position.x,rocket.position.x*.35,.06);
  camera.position.y=THREE.MathUtils.lerp(camera.position.y,rocket.position.y+4,.08);
  camera.lookAt(rocket.position.x*.25,rocket.position.y+1,-2);
 
- spawnTimer+=dt;
- if(spawnTimer>1.1){
-  spawnTimer=0;
-  makeStar();
+ spawn+=dt;
+ if(spawn>1.1){
+  spawn=0;makeStar();
   if(Math.random()>.38)makeRock();
  }
-
- // Move sky objects downward relative to rocket
- for(const cloud of clouds){
-  cloud.position.y-=5*dt;
-  if(cloud.position.y<rocket.position.y-25){
-   cloud.position.y=rocket.position.y+55+Math.random()*20;
-   cloud.position.x=(Math.random()-.5)*28;
+ for(const c of clouds){
+  c.position.y-=5*dt;
+  if(c.position.y<rocket.position.y-25){
+   c.position.y=rocket.position.y+55+Math.random()*20;
+   c.position.x=(Math.random()-.5)*28;
   }
  }
-
  for(let i=stars.length-1;i>=0;i--){
-  const s=stars[i];
-  s.rotation.y+=dt*2;
-  if(s.position.y<rocket.position.y-8){
-   scene.remove(s);stars.splice(i,1);continue;
+  const o=stars[i];o.rotation.y+=dt*2;
+  if(o.position.y<rocket.position.y-8){
+   scene.remove(o);stars.splice(i,1);continue;
   }
-  if(s.position.distanceTo(rocket.position)<1.25){
+  if(o.position.distanceTo(rocket.position)<1.25){
    score+=10;
-   scoreText.textContent=score;
-   scene.remove(s);stars.splice(i,1);
+   document.getElementById("score").textContent=score;
+   scene.remove(o);stars.splice(i,1);
   }
  }
-
  for(let i=rocks.length-1;i>=0;i--){
-  const r=rocks[i];
-  r.rotation.x+=dt;
-  r.rotation.y+=dt*.7;
-  if(r.position.y<rocket.position.y-8){
-   scene.remove(r);rocks.splice(i,1);continue;
+  const o=rocks[i];o.rotation.x+=dt;o.rotation.y+=dt;
+  if(o.position.y<rocket.position.y-8){
+   scene.remove(o);rocks.splice(i,1);continue;
   }
-  if(r.position.distanceTo(rocket.position)<1.25){
-   endFlight();
-   break;
+  if(o.position.distanceTo(rocket.position)<1.25){
+   endGame();break;
   }
  }
-
  if(active){
   renderer.render(scene,camera);
-  animationId=requestAnimationFrame(loop);
+  frame=requestAnimationFrame(loop);
  }
 }
-
-window.addEventListener("keydown",e=>{
- keys[e.key]=true;
- if(["ArrowLeft","ArrowRight"," "].includes(e.key))e.preventDefault();
-});
-window.addEventListener("keyup",e=>keys[e.key]=false);
-
-function bindButton(id,dir){
+function stopFlight(){
+ active=false;
+ cancelAnimationFrame(frame);
+}
+function bind(id,key){
  const el=document.getElementById(id);
  el.addEventListener("pointerdown",e=>{
-  e.preventDefault();keys[dir]=true;el.setPointerCapture(e.pointerId);
+  e.preventDefault();keys[key]=true;el.setPointerCapture(e.pointerId);
  });
- el.addEventListener("pointerup",()=>keys[dir]=false);
- el.addEventListener("pointercancel",()=>keys[dir]=false);
- el.addEventListener("lostpointercapture",()=>keys[dir]=false);
+ ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>{
+  el.addEventListener(ev,()=>keys[key]=false);
+ });
 }
-bindButton("left","ArrowLeft");
-bindButton("right","ArrowRight");
-
-window.openFlight=openFlight;
+bind("left","ArrowLeft");
+bind("right","ArrowRight");
+window.addEventListener("keydown",e=>{keys[e.key]=true;});
+window.addEventListener("keyup",e=>{keys[e.key]=false;});
+window.initWorld=initWorld;
 window.startFlight=startFlight;
-window.goHome=goHome;
+window.stopFlight=stopFlight;
 </script>
 </body>
 </html>

@@ -3,396 +3,480 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SK GAMING 3D PRO</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>SK FOOTBALL 3D</title>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
 </script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07130e;color:white;font-family:Arial,sans-serif}
-header{background:#102b20;padding:18px;text-align:center;border-bottom:2px solid #16d887}
-header h1{margin:0;color:#32ee9a;letter-spacing:3px}
-header p{font-size:12px;color:#c5e5d4;margin:7px 0 0}
-.top{display:flex;justify-content:space-between;padding:13px 16px;background:#0d2118}
-.points{color:#42f5a2;font-weight:bold}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#0a1c14}
-button{border:0;border-radius:9px;padding:12px 15px;background:#16ad68;color:white;font-weight:bold;cursor:pointer}
-nav button{white-space:nowrap;background:#1a3a2a}
-main{max-width:1000px;margin:auto;padding:14px}
-h2{color:#45e99a}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.card{background:#102a1e;border:1px solid #235c3d;border-radius:14px;overflow:hidden}
-.preview{height:135px;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#176b42,#07170f);position:relative;overflow:hidden}
-.preview:before{content:"";position:absolute;width:180%;height:180%;background:repeating-linear-gradient(45deg,transparent 0 25px,#ffffff0c 26px 28px);animation:move 7s linear infinite}
-@keyframes move{to{transform:translate(60px,60px)}}
-.preview span{font-size:65px;position:relative;filter:drop-shadow(0 8px 8px #0009);animation:float 2s infinite ease-in-out}
-@keyframes float{50%{transform:translateY(-10px) rotate(5deg)}}
-.preview small{position:absolute;bottom:8px;left:8px;background:#0009;padding:5px;border-radius:5px}
-.info{padding:12px}
-.info h3{margin:0 0 7px}
-.info p{color:#abc6b5;font-size:12px;margin:0 0 10px}
-.play{width:100%}
-#gameScreen{display:none}
-#gameArea{width:100%;height:350px;background:#10281d;border-radius:14px;overflow:hidden}
-#gameArea canvas{display:block;width:100%;height:100%}
-.controls{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0}
-#status{text-align:center;color:#a2f5c8;min-height:26px}
-.back{background:#35483d;margin:12px 0}
-footer{text-align:center;padding:22px;color:#89a697;font-size:12px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.preview{height:155px}}
+body{margin:0;background:#07130d;color:white;font-family:Arial;overflow:hidden;touch-action:none}
+header{height:55px;background:#10291d;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:2px solid #1be58b}
+header b{color:#35ed9b;letter-spacing:1px}
+#scoreboard{display:flex;justify-content:space-around;align-items:center;background:#10271c;padding:9px;font-size:17px;font-weight:bold}
+#scoreboard span{color:#43ed9e}
+#timer{color:#ffe16b}
+#game{width:100%;height:calc(100dvh - 190px);min-height:300px;position:relative}
+#game canvas{width:100%;height:100%;display:block}
+#message{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:#071c12dd;padding:9px 15px;border-radius:20px;color:#9cffc8;white-space:nowrap;pointer-events:none}
+#controls{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:space-between;align-items:end;padding:0 15px;pointer-events:none}
+#pad{display:grid;grid-template-columns:repeat(3,53px);grid-template-rows:repeat(2,53px);gap:5px;pointer-events:auto}
+#pad button,.action{background:#174b31eF;border:1px solid #48d995;color:white;border-radius:13px;font-size:19px;touch-action:none}
+#pad button:active,.action:active{background:#23b976}
+#up{grid-column:2}#left{grid-column:1;grid-row:2}
+#down{grid-column:2;grid-row:2}#right{grid-column:3;grid-row:2}
+#actions{display:flex;gap:8px;align-items:end;pointer-events:auto}
+.action{width:67px;height:67px;border-radius:50%;font-weight:bold;font-size:13px}
+#shoot{background:#b77a17;border-color:#ffdc68}
+#sprint{width:58px;height:58px;background:#1768a5}
+#bottom{display:flex;justify-content:space-between;padding:7px 12px;background:#0d2117;font-size:12px;color:#b9d9c6}
+#bottom button{background:#22583a;color:white;border:0;padding:8px 12px;border-radius:7px}
+#start{position:fixed;inset:0;background:#04140deF;z-index:10;display:flex;align-items:center;justify-content:center;padding:20px}
+.panel{max-width:390px;width:100%;text-align:center;background:#102b1e;border:1px solid #35d78c;border-radius:18px;padding:25px}
+.panel h1{color:#39e999}
+.panel button{background:#18b66b;color:white;border:0;padding:15px 30px;border-radius:10px;font-size:18px;font-weight:bold}
+.panel p{color:#c4d9cc;line-height:1.6}
+@media(min-width:750px){
+ #game{height:calc(100dvh - 155px)}
+ #pad{grid-template-columns:repeat(3,65px);grid-template-rows:repeat(2,60px)}
+ #pad button{font-size:23px}
+ .action{width:75px;height:75px}
+}
 </style>
 </head>
 <body>
+
 <header>
-<h1>SK GAMING 3D PRO</h1>
-<p>3D PLAY • ARCADE • VIRTUAL SPORTS</p>
+<b>⚽ SK FOOTBALL 3D</b>
+<span>3D MATCH</span>
 </header>
-<div class="top">
-<span>👤 Player</span>
-<span class="points">⭐ Points: <span id="points">100</span></span>
+
+<div id="scoreboard">
+<div>🟢 SK <span id="homeScore">0</span></div>
+<div id="timer">03:00</div>
+<div>🔴 AI <span id="awayScore">0</span></div>
 </div>
-<nav>
-<button onclick="filterGames('all')">All Games</button>
-<button onclick="filterGames('sports')">Sports</button>
-<button onclick="filterGames('racing')">Racing</button>
-<button onclick="filterGames('arcade')">Arcade</button>
-</nav>
-<main>
-<section id="home">
-<h2>🎮 Choose Your Game</h2>
-<div class="grid" id="grid"></div>
-</section>
-<section id="gameScreen">
-<button class="back" onclick="goHome()">← BACK TO HOME</button>
-<h2 id="gameTitle">Game</h2>
-<div id="gameArea"></div>
-<div class="controls" id="controls"></div>
-<div id="status">গেম শুরু করুন!</div>
-</section>
-</main>
-<footer>SK GAMING 3D PRO © 2026 | Virtual points only</footer>
+
+<div id="game">
+<div id="message">ম্যাচ শুরু করুন</div>
+<div id="controls">
+<div id="pad">
+<button id="up" data-key="up">▲</button>
+<button id="left" data-key="left">◀</button>
+<button id="down" data-key="down">▼</button>
+<button id="right" data-key="right">▶</button>
+</div>
+<div id="actions">
+<button class="action" id="sprint">SPRINT</button>
+<button class="action" id="shoot">SHOOT ⚽</button>
+</div>
+</div>
+</div>
+
+<div id="bottom">
+<span>Controls: Arrow / WASD</span>
+<button id="reset">↻ RESTART</button>
+</div>
+
+<div id="start">
+<div class="panel">
+<h1>⚽ SK FOOTBALL 3D</h1>
+<p>নিজের খেলোয়াড় চালান, বল নিয়ন্ত্রণ করুন এবং প্রতিপক্ষের গোলপোস্টে শট নিন।</p>
+<p>মোবাইলে দিকনির্দেশক বাটন ব্যবহার করুন।</p>
+<button id="play">START MATCH</button>
+</div>
+</div>
 
 <script type="module">
 import * as THREE from "three";
 
-const games=[
- {id:"football",name:"3D Football",emoji:"⚽",cat:"sports",desc:"3D ফুটবল শট ও গোল"},
- {id:"basketball",name:"3D Basketball",emoji:"🏀",cat:"sports",desc:"বাস্কেটবল শুটিং"},
- {id:"racing",name:"3D Car Racing",emoji:"🏎️",cat:"racing",desc:"গাড়ি চালিয়ে বাধা এড়ান"},
- {id:"bike",name:"3D Bike Racing",emoji:"🏍️",cat:"racing",desc:"বাইক রেসিং চ্যালেঞ্জ"},
- {id:"cricket",name:"3D Cricket",emoji:"🏏",cat:"sports",desc:"ব্যাটিং ও রান সংগ্রহ"},
- {id:"tennis",name:"3D Tennis",emoji:"🎾",cat:"sports",desc:"টেনিস র‍্যালি"},
- {id:"virtual",name:"Virtual Sports",emoji:"🏆",cat:"arcade",desc:"অ্যানিমেটেড ভার্চুয়াল রেস"}
-];
-
-let points=Number(localStorage.getItem("sk3dpro_points")||100);
-let scene,camera,renderer,raf,clock;
-let current=null,score=0,objects={},updateGame=()=>{};
-let controls=document.getElementById("controls");
 const $=id=>document.getElementById(id);
+const game=$("game");
+let scene,camera,renderer,clock;
+let player,opponent,ball;
+let running=false,finished=false;
+let homeScore=0,awayScore=0,timeLeft=180;
+let keys={up:false,down:false,left:false,right:false,sprint:false};
+let ballVelocity=new THREE.Vector3();
+let playerVelocity=new THREE.Vector3();
+let aiCooldown=0;
+let goalMessage="";
+const fieldW=22,fieldL=34;
 
-function renderCards(list){
- $("grid").innerHTML=list.map(g=>`
- <div class="card">
-  <div class="preview"><span>${g.emoji}</span><small>▶ 3D GAME</small></div>
-  <div class="info">
-   <h3>${g.name}</h3><p>${g.desc}</p>
-   <button class="play" onclick="startGame('${g.id}')">PLAY NOW</button>
-  </div>
- </div>`).join("");
-}
-window.filterGames=cat=>renderCards(cat==="all"?games:games.filter(g=>g.cat===cat));
+function say(text){$("message").textContent=text}
 
-function addPoints(n){
- points=Math.max(0,points+n);
- $("points").textContent=points;
- localStorage.setItem("sk3dpro_points",points);
-}
-function say(t){$("status").textContent=t}
-function button(label,fn){
- const b=document.createElement("button");
- b.textContent=label;b.onclick=fn;controls.appendChild(b);
-}
-function material(color,roughness=.65){
+function mat(color,roughness=.7){
  return new THREE.MeshStandardMaterial({color,roughness});
 }
-function cube(w,h,d,color,x,y,z){
- const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material(color));
- m.position.set(x,y,z);scene.add(m);return m;
+
+function box(parent,w,h,d,color,x,y,z){
+ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(color));
+ m.position.set(x,y,z);
+ parent.add(m);
+ return m;
 }
-function sphere(r,color,x,y,z){
- const m=new THREE.Mesh(new THREE.SphereGeometry(r,24,18),material(color));
- m.position.set(x,y,z);scene.add(m);return m;
+
+function sphere(parent,r,color,x,y,z){
+ const m=new THREE.Mesh(new THREE.SphereGeometry(r,20,16),mat(color));
+ m.position.set(x,y,z);
+ parent.add(m);
+ return m;
 }
-function cylinder(rt,rb,h,color,x,y,z){
- const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,24),material(color));
- m.position.set(x,y,z);scene.add(m);return m;
+
+function makePlayer(color,shortColor){
+ const group=new THREE.Group();
+ const torso=sphere(group,.48,color,0,1.25,0);
+ torso.scale.set(.72,1.2,.48);
+ sphere(group,.25,0xe2b58c,0,2,0);
+ box(group,.17,.75,.2,shortColor,-.19,.47,0);
+ box(group,.17,.75,.2,shortColor,.19,.47,0);
+ box(group,.3,.12,.35,0x222222,-.19,.08,-.06);
+ box(group,.3,.12,.35,0x222222,.19,.08,-.06);
+ box(group,.2,.75,.2,color,-.55,1.3,0);
+ box(group,.2,.75,.2,color,.55,1.3,0);
+ return group;
 }
-function ground(color=0x17643b){
- const g=new THREE.Mesh(new THREE.PlaneGeometry(60,60),material(color));
- g.rotation.x=-Math.PI/2;g.position.y=-.5;scene.add(g);
+
+function createGoal(z){
+ const goal=new THREE.Group();
+ const depth=.9;
+ box(goal,.16,2.5,depth,0xffffff,-3.5,1.25,0);
+ box(goal,.16,2.5,depth,0xffffff,3.5,1.25,0);
+ box(goal,7.15,.16,depth,0xffffff,0,2.5,0);
+ for(let x=-3.4;x<=3.4;x+=.7){
+  box(goal,.025,2.4,.025,0xd9e8dc,x,1.2,-.4);
+ }
+ goal.position.z=z;
+ scene.add(goal);
 }
-function addLights(){
- scene.add(new THREE.HemisphereLight(0xffffff,0x34513d,2));
- const light=new THREE.DirectionalLight(0xffffff,2.2);
- light.position.set(5,10,7);scene.add(light);
+
+function createField(){
+ const grass=new THREE.Mesh(
+  new THREE.PlaneGeometry(fieldW,fieldL),
+  mat(0x16723b)
+ );
+ grass.rotation.x=-Math.PI/2;
+ grass.position.y=-.06;
+ scene.add(grass);
+
+ for(let z=-15;z<16;z+=5){
+  const stripe=new THREE.Mesh(
+   new THREE.PlaneGeometry(fieldW,5),
+   mat((z/5)%2===0?0x1c8247:0x176b3b)
+  );
+  stripe.rotation.x=-Math.PI/2;
+  stripe.position.set(0,-.045,z+2.5);
+  scene.add(stripe);
+ }
+
+ const white=mat(0xffffff);
+ function line(w,d,x,z){
+  const l=new THREE.Mesh(new THREE.BoxGeometry(w,.025,d),white);
+  l.position.set(x,.01,z);scene.add(l);
+ }
+ line(fieldW,.09,0,-fieldL/2);
+ line(fieldW,.09,0,fieldL/2);
+ line(.09,fieldL,-fieldW/2,0);
+ line(.09,fieldL,fieldW/2,0);
+ line(fieldW,.09,0,0);
+
+ const circle=new THREE.Mesh(
+  new THREE.TorusGeometry(3, .045,8,64),white
+ );
+ circle.rotation.x=Math.PI/2;
+ circle.position.y=.025;
+ scene.add(circle);
+ const center=sphere(.11,0xffffff,0,.04,0);
+ center.scale.set(1,.15,1);
+
+ for(const z of [-13,13]){
+  line(12,.07,0,z);
+  line(.07,5,-6,z+(z>0?-2.5:2.5));
+  line(.07,5,6,z+(z>0?-2.5:2.5));
+  line(12,.07,0,z+(z>0?-5:5));
+ }
+ createGoal(-17);
+ createGoal(17);
+
+ // Stadium seating
+ for(let side of [-1,1]){
+  for(let row=0;row<4;row++){
+   const stand=box(scene,2.5,.7,fieldL,0x344c43,
+     side*(12.5+row*.65),.2+row*.72,0);
+   stand.rotation.z=side*.08;
+  }
+ }
 }
+
 function setup(){
- if(raf)cancelAnimationFrame(raf);
- objects={};
  scene=new THREE.Scene();
- scene.background=new THREE.Color(0x10251b);
- scene.fog=new THREE.Fog(0x10251b,18,48);
- const w=$("gameArea").clientWidth||350;
- camera=new THREE.PerspectiveCamera(55,w/350,.1,100);
+ scene.background=new THREE.Color(0x83b9d5);
+ scene.fog=new THREE.Fog(0x83b9d5,38,75);
+
+ camera=new THREE.PerspectiveCamera(55,game.clientWidth/game.clientHeight,.1,120);
+ camera.position.set(0,9,13);
+
  renderer=new THREE.WebGLRenderer({antialias:true});
- renderer.setPixelRatio(Math.min(devicePixelRatio,2));
- renderer.setSize(w,350);
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
+ renderer.setSize(game.clientWidth,game.clientHeight);
  renderer.shadowMap.enabled=true;
- $("gameArea").innerHTML="";
- $("gameArea").appendChild(renderer.domElement);
+ game.insertBefore(renderer.domElement,$("message"));
+
+ scene.add(new THREE.HemisphereLight(0xffffff,0x456047,2));
+ const sun=new THREE.DirectionalLight(0xffffff,2.3);
+ sun.position.set(-7,15,8);
+ sun.castShadow=true;
+ scene.add(sun);
+
+ createField();
+
+ player=makePlayer(0x13c978,0x087c4c);
+ player.position.set(0,0,8);
+ scene.add(player);
+
+ opponent=makePlayer(0xe34242,0xa91f2e);
+ opponent.position.set(1,0,-8);
+ scene.add(opponent);
+
+ ball=sphere(scene,.27,0xffffff,0,.27,0);
+ ball.castShadow=true;
+ for(let i=0;i<5;i++){
+  const patch=sphere(scene,.075,0x222222,0,.27,0);
+  patch.scale.set(1,.25,1);
+  patch.userData.index=i;
+  ball.add(patch);
+ }
+
  clock=new THREE.Clock();
- addLights();
- window.onresize=()=>{
-  if(!renderer||!camera)return;
-  const width=$("gameArea").clientWidth;
-  camera.aspect=width/350;camera.updateProjectionMatrix();
-  renderer.setSize(width,350);
- };
 }
+
+function kickoff(){
+ player.position.set(0,0,8);
+ opponent.position.set(1,0,-8);
+ ball.position.set(0,.27,0);
+ ballVelocity.set(0,0,0);
+ playerVelocity.set(0,0,0);
+ aiCooldown=1;
+}
+
+function resetMatch(){
+ homeScore=0;awayScore=0;timeLeft=180;
+ $("homeScore").textContent=0;
+ $("awayScore").textContent=0;
+ $("timer").textContent="03:00";
+ finished=false;running=true;
+ kickoff();
+ say("ম্যাচ শুরু হয়েছে!");
+}
+
+function scoreGoal(home){
+ if(!running)return;
+ if(home){
+  homeScore++;
+  $("homeScore").textContent=homeScore;
+  say("⚽ GOAL! SK গোল করেছে!");
+ }else{
+  awayScore++;
+  $("awayScore").textContent=awayScore;
+  say("AI গোল করেছে!");
+ }
+ running=false;
+ setTimeout(()=>{
+  if(!finished){
+   kickoff();
+   running=true;
+   say("আবার খেলা শুরু!");
+  }
+ },1800);
+}
+
+function shoot(){
+ if(!running)return;
+ const distance=player.position.distanceTo(ball.position);
+ if(distance>2.4){say("বল আপনার কাছে নেই! বলের কাছে যান");return}
+ const direction=new THREE.Vector3(
+  player.position.x*.05,0,-1
+ ).normalize();
+ ballVelocity.copy(direction.multiplyScalar(13));
+ ballVelocity.y=4;
+ say("⚽ শট নেওয়া হয়েছে!");
+}
+
+function movePlayer(dt){
+ let dx=0,dz=0;
+ if(keys.left)dx-=1;
+ if(keys.right)dx+=1;
+ if(keys.up)dz-=1;
+ if(keys.down)dz+=1;
+
+ const length=Math.hypot(dx,dz);
+ if(length>0){dx/=length;dz/=length}
+
+ const speed=keys.sprint?9:6;
+ playerVelocity.set(dx*speed,0,dz*speed);
+ player.position.x+=playerVelocity.x*dt;
+ player.position.z+=playerVelocity.z*dt;
+
+ player.position.x=THREE.MathUtils.clamp(player.position.x,-10,10);
+ player.position.z=THREE.MathUtils.clamp(player.position.z,-15,15);
+
+ if(length>0){
+  player.rotation.y=Math.atan2(dx,-dz);
+ }
+
+ // Player touches the ball
+ const diff=ball.position.clone().sub(player.position);
+ diff.y=0;
+ const dist=diff.length();
+ if(dist<1.05){
+  if(length>0){
+   const push=new THREE.Vector3(dx,0,dz);
+   ballVelocity.x+=push.x*8*dt;
+   ballVelocity.z+=push.z*8*dt;
+  }else{
+   ballVelocity.multiplyScalar(.96);
+  }
+ }
+}
+
+function moveAI(dt){
+ const target=ball.position;
+ const dx=target.x-opponent.position.x;
+ const dz=target.z-opponent.position.z;
+ const distance=Math.hypot(dx,dz);
+
+ if(distance>.9){
+  opponent.position.x+=dx/distance*4.3*dt;
+  opponent.position.z+=dz/distance*4.3*dt;
+  opponent.rotation.y=Math.atan2(dx,-dz);
+ }else{
+  aiCooldown-=dt;
+  if(aiCooldown<=0){
+   const aim=new THREE.Vector3(
+    -player.position.x*.3,0,1
+   ).normalize();
+   ballVelocity.x=aim.x*9;
+   ballVelocity.z=aim.z*11;
+   ballVelocity.y=2.8;
+   aiCooldown=2.2;
+   say("প্রতিপক্ষ শট নিয়েছে!");
+  }
+ }
+
+ opponent.position.x=THREE.MathUtils.clamp(opponent.position.x,-10,10);
+ opponent.position.z=THREE.MathUtils.clamp(opponent.position.z,-15,15);
+}
+
+function updateBall(dt){
+ ballVelocity.y-=9.8*dt;
+ ball.position.addScaledVector(ballVelocity,dt);
+
+ if(ball.position.y<.27){
+  ball.position.y=.27;
+  if(ballVelocity.y<-.8)ballVelocity.y*=-.35;
+  else ballVelocity.y=0;
+ }
+ ballVelocity.x*=Math.pow(.985,dt*60);
+ ballVelocity.z*=Math.pow(.985,dt*60);
+ ball.rotation.x+=ballVelocity.z*dt*2;
+ ball.rotation.z-=ballVelocity.x*dt*2;
+
+ if(Math.abs(ball.position.x)>10.5){
+  ball.position.x=Math.sign(ball.position.x)*10.5;
+  ballVelocity.x*=-.5;
+ }
+ if(ball.position.z<-17.2||ball.position.z>17.2){
+  if(Math.abs(ball.position.x)<3.4&&ball.position.y<2.5){
+   scoreGoal(ball.position.z<0);
+   return;
+  }
+  ball.position.z=Math.sign(ball.position.z)*17.2;
+  ballVelocity.z*=-.55;
+ }
+}
+
+function updateCamera(){
+ const target=new THREE.Vector3(
+  player.position.x*.65,
+  0,
+  player.position.z-1
+ );
+ const desired=new THREE.Vector3(
+  player.position.x*.6,
+  8,
+  player.position.z+10
+ );
+ camera.position.lerp(desired,.07);
+ camera.lookAt(target);
+}
+
 function animate(){
- raf=requestAnimationFrame(animate);
+ requestAnimationFrame(animate);
+ if(!renderer)return;
  const dt=Math.min(clock.getDelta(),.04);
- updateGame(dt);
+
+ if(running){
+  movePlayer(dt);
+  moveAI(dt);
+  updateBall(dt);
+  timeLeft-=dt;
+  if(timeLeft<=0){
+   timeLeft=0;running=false;finished=true;
+   const result=homeScore>awayScore?"SK TEAM WON!":
+    homeScore<awayScore?"AI TEAM WON!":"MATCH DRAW!";
+   say("🏆 "+result);
+  }
+  const m=Math.floor(timeLeft/60);
+  const s=Math.floor(timeLeft%60);
+  $("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ }
+ updateCamera();
  renderer.render(scene,camera);
 }
-function startGame(id){
- current=games.find(g=>g.id===id);score=0;
- $("home").style.display="none";
- $("gameScreen").style.display="block";
- $("gameTitle").textContent=current.name;
- controls.innerHTML="";
- say("খেলা শুরু করুন!");
- setup();
- if(id==="football")football();
- if(id==="basketball")basketball();
- if(id==="racing"||id==="bike")racing(id);
- if(id==="cricket")cricket();
- if(id==="tennis")tennis();
- if(id==="virtual")virtualSports();
- animate();
-}
-window.startGame=startGame;
 
-function football(){
- camera.position.set(0,5,10);camera.lookAt(0,.4,-2);
- ground(0x18703d);
- for(let z=-12;z<13;z+=3)cube(0.035,.01,3,0x75bd75,0,.01,z);
- // Goal posts
- cube(.13,2.3,.13,0xffffff,-1.7,.65,-5);
- cube(.13,2.3,.13,0xffffff,1.7,.65,-5);
- cube(3.5,.13,.13,0xffffff,0,1.8,-5);
- const ball=sphere(.35,0xffffff,0,.1,2);
- const spots=[];
- for(let i=0;i<5;i++)spots.push(sphere(.07,0x222222,Math.cos(i*1.25)*.29,.1+Math.sin(i*1.25)*.2,2));
- let aim=0,busy=false;
- button("⬅ AIM LEFT",()=>{aim=Math.max(-1.2,aim-.3);say("লক্ষ্য বামে সেট করা হয়েছে")});
- button("AIM RIGHT ➡",()=>{aim=Math.min(1.2,aim+.3);say("লক্ষ্য ডানে সেট করা হয়েছে")});
- button("⚽ SHOOT",()=>{
-  if(busy)return;busy=true;
-  const targetX=aim;
-  const start=ball.position.clone(),end=new THREE.Vector3(targetX,1.0,-5);
-  let t=0;
-  function shot(){
-   t+=.035;
-   ball.position.lerpVectors(start,end,Math.min(t,1));
-   ball.position.y+=Math.sin(Math.min(t,1)*Math.PI)*1.4;
-   if(t<1){requestAnimationFrame(shot);return}
-   const goal=Math.abs(targetX)<1.45;
-   if(goal){score++;addPoints(10);say("গোল! +১০ পয়েন্ট | স্কোর: "+score)}
-   else say("গোল মিস! আবার চেষ্টা করুন");
-   setTimeout(()=>{ball.position.set(0,.1,2);busy=false},450);
-  }
-  shot();
+function setKey(k,v){keys[k]=v}
+document.querySelectorAll("[data-key]").forEach(b=>{
+ const k=b.dataset.key;
+ b.addEventListener("pointerdown",e=>{
+  e.preventDefault();b.setPointerCapture(e.pointerId);setKey(k,true);
  });
- button("RESET",()=>{score=0;aim=0;ball.position.set(0,.1,2);say("নতুন করে শুরু করুন")});
- updateGame=dt=>{ball.rotation.x+=dt*2;ball.rotation.z+=dt};
-}
-function basketball(){
- camera.position.set(0,4,10);camera.lookAt(0,1,-2);
- ground(0x9b7448);
- cube(3,.12,.12,0xffffff,0,1.1,-4);
- cube(.12,2,.12,0xffffff,-1.5,.1,-4);
- cube(.12,2,.12,0xffffff,1.5,.1,-4);
- cube(3,.12,.12,0xffffff,0,2,-4);
- const board=cube(2,.9,.12,0xdcecff,0,2.1,-4.1);
- const hoop=new THREE.Mesh(new THREE.TorusGeometry(.65,.07,12,32),material(0xff8b20));
- hoop.position.set(0,1.5,-3.75);scene.add(hoop);
- const ball=sphere(.32,0xff8a18,0,.1,2);
- let aim=0,busy=false;
- button("⬅ LEFT",()=>aim=Math.max(-1,aim-.25));
- button("RIGHT ➡",()=>aim=Math.min(1,aim+.25));
- button("🏀 SHOOT",()=>{
-  if(busy)return;busy=true;
-  const start=ball.position.clone(),end=new THREE.Vector3(aim,1.55,-3.7);
-  let t=0;
-  function fly(){
-   t+=.035;
-   const p=Math.min(t,1);
-   ball.position.lerpVectors(start,end,p);
-   ball.position.y+=Math.sin(p*Math.PI)*2;
-   if(t<1){requestAnimationFrame(fly);return}
-   if(Math.abs(aim)<.42){score++;addPoints(10);say("বাস্কেট! +১০ পয়েন্ট | স্কোর: "+score)}
-   else say("শট মিস হয়েছে! আবার চেষ্টা করুন");
-   setTimeout(()=>{ball.position.set(0,.1,2);busy=false},450);
-  }
-  fly();
+ ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>{
+  b.addEventListener(ev,()=>setKey(k,false));
  });
- button("RESET",()=>{score=0;aim=0;ball.position.set(0,.1,2);say("আবার শুরু করুন")});
- updateGame=dt=>{ball.rotation.x+=dt*2};
-}
-function makeCar(color){
- const group=new THREE.Group();
- const body=new THREE.Mesh(new THREE.BoxGeometry(1.2,.45,1.9),material(color));
- body.position.y=.05;group.add(body);
- const top=new THREE.Mesh(new THREE.BoxGeometry(.85,.5,.85),material(0x152a2b));
- top.position.set(0,.5,-.1);group.add(top);
- for(const x of [-.58,.58])for(const z of [-.6,.6]){
-  const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,.15,16),material(0x111111));
-  wheel.rotation.z=Math.PI/2;wheel.position.set(x,-.12,z);group.add(wheel);
- }
- scene.add(group);return group;
-}
-function racing(id){
- camera.position.set(0,5,9);camera.lookAt(0,0,-5);
- ground(0x23683a);
- cube(7,.08,35,0x333839,0,-.43,-8);
- for(let z=-24;z<10;z+=3)cube(.1,.025,1.4,0xffffff,0,-.37,z);
- const vehicle=makeCar(id==="bike"?0x1ed8e7:0x1ee78b);
- vehicle.position.set(0,0,3);
- const obstacles=[];
- for(let i=0;i<5;i++){
-  const o=cube(.9,.9,.9,i%2?0xe23c30:0xffbb25,(i%3-1)*2,.05,-5-i*5);
-  obstacles.push(o);
- }
- let lane=0,travel=0,active=true;
- button("⬅ LEFT",()=>lane=Math.max(-2,lane-1));
- button("RIGHT ➡",()=>lane=Math.min(2,lane+1));
- button("🚀 DRIVE",()=>{
-  if(!active)return;
-  travel+=1;
-  vehicle.position.x=lane;
-  score++;addPoints(2);
-  say("চালানো হয়েছে! +২ পয়েন্ট | স্কোর: "+score);
- });
- button("RESET",()=>{
-  score=0;lane=0;travel=0;active=true;
-  vehicle.position.set(0,0,3);
-  obstacles.forEach((o,i)=>o.position.z=-5-i*5);
-  say("রেস নতুন করে শুরু হয়েছে");
- });
- updateGame=dt=>{
-  if(!active)return;
-  vehicle.position.x+=(lane-vehicle.position.x)*Math.min(1,dt*7);
-  obstacles.forEach(o=>{
-   o.position.z+=dt*(2+travel*.08);
-   if(o.position.z>5)o.position.z=-25;
-   if(Math.abs(o.position.x-vehicle.position.x)<.75&&Math.abs(o.position.z-3)<.9){
-    active=false;say("বাধায় ধাক্কা! RESET চাপুন");
-   }
-  });
- };
-}
-function cricket(){
- camera.position.set(0,4,10);camera.lookAt(0,1,-1);
- ground(0x287343);
- cube(1.5,.04,10,0xc4a77c,0,-.45,-1);
- for(let x of [-.35,.0,.35])cylinder(.045,.045,1.1,0xe7dfc4,x,.1,-3.7);
- const bat=cube(.18,1.5,.2,0xb77b38,.9,.1,1.7);
- bat.rotation.z=-.3;
- const ball=sphere(.18,0xc83b32,0,1.3,-5);
- let active=false,phase=0;
- button("▶ START BALL",()=>{
-  ball.position.set(0,1.3,-5);phase=0;active=true;
-  say("বল এগিয়ে আসছে—ঠিক সময়ে HIT চাপুন!");
- });
- button("🏏 HIT",()=>{
-  if(!active){say("আগে START BALL চাপুন");return}
-  if(phase<.6){say("খুব তাড়াতাড়ি হয়েছে!");score=0}
-  else if(phase<1.25){score+=4;addPoints(4);say("চমৎকার শট! +৪ রান")}
-  else{score+=1;addPoints(1);say("১ রান! +১ পয়েন্ট")}
-  active=false;ball.position.set(0,1.3,-5);
-  say($("status").textContent+" | স্কোর: "+score);
- });
- button("RESET",()=>{score=0;active=false;ball.position.set(0,1.3,-5);say("নতুন ইনিংস")});
- updateGame=dt=>{
-  if(active){phase+=dt;ball.position.z+=dt*3;ball.position.y=1.3+Math.sin(phase*4)*.4;
-   if(ball.position.z>2){active=false;ball.position.set(0,1.3,-5);say("বল মিস হয়েছে! আবার চেষ্টা করুন")}}
- };
-}
-function tennis(){
- camera.position.set(0,5,10);camera.lookAt(0,.5,-2);
- ground(0x247b9b);
- cube(7,.05,12,0xdcebe8,0,-.43,-1);
- cube(7,.1,.12,0xffffff,0,-.3,-1);
- cube(.07,.7,.07,0xffffff,-3.5,-.05,-1);
- cube(.07,.7,.07,0xffffff,3.5,-.05,-1);
- cube(7,.65,.05,0xe4f2f1,0,.1,-1);
- const ball=sphere(.17,0xc9ee42,0,1,2);
- let active=false,phase=0;
- button("▶ START RALLY",()=>{active=true;phase=0;ball.position.set(0,1,2);say("বল আসছে! সঠিক সময়ে HIT করুন")});
- button("🎾 HIT",()=>{
-  if(!active){say("আগে START RALLY চাপুন");return}
-  if(phase>.5&&phase<1.3){score++;addPoints(3);say("র‍্যালি সফল! +৩ পয়েন্ট | স্কোর: "+score)}
-  else say("সময় ঠিক হয়নি! আবার চেষ্টা করুন");
-  active=false;ball.position.set(0,1,2);
- });
- button("RESET",()=>{score=0;active=false;ball.position.set(0,1,2);say("নতুন র‍্যালি")});
- updateGame=dt=>{
-  if(active){phase+=dt;ball.position.z-=dt*4;ball.position.y=1+Math.abs(Math.sin(phase*5))*.8;
-   if(ball.position.z<-3){active=false;ball.position.set(0,1,2);say("বল মিস হয়েছে! আবার চেষ্টা করুন")}}
- };
-}
-function virtualSports(){
- camera.position.set(0,8,10);camera.lookAt(0,0,-2);
- ground(0x246d3c);
- const track=new THREE.Mesh(new THREE.RingGeometry(3,5,64),material(0xb85e39));
- track.rotation.x=-Math.PI/2;track.position.y=-.42;scene.add(track);
- const runners=[];
- const colors=[0xffcf36,0x22d9f0,0xf45151,0xe8e8e8];
- colors.forEach((c,i)=>{
-  const runner=new THREE.Group();
-  const body=cube(.35,.8,.3,c,0,0,0);body.position.y=.4;runner.add(body);
-  const head=sphere(.2,0xf0c29a,0,.95,0);runner.add(head);
-  runner.userData={lane:i,angle:i*1.4};
-  scene.add(runner);runners.push(runner);
- });
- let running=false,elapsed=0;
- button("▶ START SIMULATION",()=>{running=true;elapsed=0;score=0;say("ভার্চুয়াল রেস শুরু হয়েছে!")});
- button("STOP",()=>{running=false;say("রেস থামানো হয়েছে")});
- updateGame=dt=>{
-  if(running){
-   elapsed+=dt;
-   runners.forEach((r,i)=>{
-    const a=elapsed*(.45+i*.06)+i*1.4;
-    r.position.set(Math.cos(a)*(4+i*.13),0,Math.sin(a)*(4+i*.13));
-    r.rotation.y=-a;
-   });
-   if(elapsed>12){running=false;score=1;addPoints(10);say("সিমুলেশন শেষ! +১০ ভার্চুয়াল পয়েন্ট")}
-  }
- };
-}
-function goHome(){
- if(raf)cancelAnimationFrame(raf);
- raf=null;updateGame=()=>{};
- $("gameScreen").style.display="none";
- $("home").style.display="block";
- if(renderer){renderer.dispose();renderer=null}
-}
-window.goHome=goHome;
-$("points").textContent=points;
-renderCards(games);
+});
+$("sprint").addEventListener("pointerdown",e=>{e.preventDefault();keys.sprint=true});
+["pointerup","pointercancel","lostpointercapture"].forEach(ev=>{
+ $("sprint").addEventListener(ev,()=>keys.sprint=false);
+});
+$("shoot").onclick=shoot;
+$("reset").onclick=resetMatch;
+
+window.addEventListener("keydown",e=>{
+ const map={ArrowUp:"up",w:"up",ArrowDown:"down",s:"down",
+ ArrowLeft:"left",a:"left",ArrowRight:"right",d:"right",
+ Shift:"sprint", " ":"shoot"};
+ const k=map[e.key];
+ if(k){e.preventDefault();if(k==="shoot")shoot();else keys[k]=true}
+});
+window.addEventListener("keyup",e=>{
+ const map={ArrowUp:"up",w:"up",ArrowDown:"down",s:"down",
+ ArrowLeft:"left",a:"left",ArrowRight:"right",d:"right",Shift:"sprint"};
+ if(map[e.key])keys[map[e.key]]=false;
+});
+
+$("play").onclick=()=>{
+ $("start").style.display="none";
+ setup();
+ resetMatch();
+ animate();
+};
+
+window.addEventListener("resize",()=>{
+ if(!renderer)return;
+ camera.aspect=game.clientWidth/game.clientHeight;
+ camera.updateProjectionMatrix();
+ renderer.setSize(game.clientWidth,game.clientHeight);
+});
 </script>
 </body>
 </html>

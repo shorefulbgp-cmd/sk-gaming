@@ -4,88 +4,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d18">
 <title>SK GAMING</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090d18;color:white;font-family:Arial;text-align:center}
-header{background:#171e30;padding:25px;color:#ffd700}
+body{
+ margin:0;
+ background:#090d18;
+ color:white;
+ font-family:Arial,sans-serif;
+ text-align:center;
+}
+header{
+ background:#171e30;
+ padding:28px 16px;
+ color:#ffdf00;
+}
 h1{margin:0;font-size:30px}
-.card{background:#171e30;margin:18px;padding:22px;border-radius:16px}
-.coins{font-size:30px;color:#ffd700;font-weight:bold}
-button{background:#ffd700;color:#111;border:0;padding:13px 25px;border-radius:9px;font-weight:bold;margin:8px;font-size:16px}
-.game{background:#222e45;padding:20px;border-radius:12px;margin:12px 0}
-footer{padding:25px;color:#aaa}
+header p{margin:12px 0 0;font-size:18px}
+main{max-width:720px;margin:22px auto;padding:0 14px}
+.card{
+ background:#171e30;
+ margin:18px 0;
+ padding:22px 18px;
+ border-radius:22px;
+}
+h2{font-size:25px;margin:4px 0 18px}
+.balance{
+ font-size:38px;
+ font-weight:bold;
+ color:#ffdf00;
+ margin:12px;
+}
+.game{
+ background:#222e45;
+ padding:22px 16px;
+ border-radius:18px;
+ margin:14px 0;
+}
+button{
+ background:#ffdf00;
+ color:#111;
+ border:0;
+ border-radius:13px;
+ padding:15px 22px;
+ font-size:17px;
+ font-weight:bold;
+ cursor:pointer;
+ margin:7px;
+ min-width:170px;
+}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.secondary{background:#34435e;color:white}
+#coinButton{
+ font-size:76px;
+ width:150px;
+ height:150px;
+ min-width:0;
+ border-radius:50%;
+ display:block;
+ margin:18px auto;
+ background:linear-gradient(145deg,#ffe66a,#e6a900);
+ box-shadow:0 7px 0 #986900;
+}
+#coinButton:active{
+ box-shadow:0 2px 0 #986900;
+ transform:translateY(5px);
+}
+#status{min-height:26px;color:#b9c7dc}
+.small{color:#b9c7dc;font-size:14px;line-height:1.5}
+footer{padding:22px;color:#9aa6ba;font-size:14px}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>🎮 SK GAMING</h1>
-<p>Play • Enjoy • Win Virtual Coins</p>
+<p>Play • Enjoy • Collect Virtual Coins</p>
 </header>
 
-<div class="card">
+<main>
+
+<section class="card">
 <h2>👤 My Account</h2>
-<p>Virtual Coin Balance</p>
-<div class="coins" id="coins">1000 🪙</div>
+<div>Virtual Coin Balance</div>
+<div class="balance">
+<span id="coins">1000</span> 🪙
+</div>
+<div class="small">
+এগুলো শুধু গেমের ভার্চুয়াল পয়েন্ট।
+</div>
+</section>
+
+<section class="card">
+<h2>🎯 Coin Click Game</h2>
+
+<div class="game">
+<p>কয়েনটিতে চাপ দিন এবং ভার্চুয়াল কয়েন সংগ্রহ করুন!</p>
+
+<button id="coinButton" type="button">🪙</button>
+
+<strong>প্রতি ক্লিকে +১০ কয়েন</strong>
+
+<p id="status">
+খেলা শুরু করতে কয়েনটিতে চাপ দিন।
+</p>
 </div>
 
-<div class="card">
-<h2>🎯 Choose Your Game</h2>
 <div class="game">
-<h3>🪙 Coin Click</h3>
-<p>Click and collect virtual coins!</p>
-<button onclick="earn()">PLAY GAME</button>
-</div>
-<div class="game">
-<h3>🎁 Daily Bonus</h3>
-<p>Collect your daily virtual reward</p>
-<button onclick="bonus()">CLAIM BONUS</button>
-</div>
-</div>
+<h2>🎁 Daily Bonus</h2>
+<p>প্রতিদিন একবার ১০০ ভার্চুয়াল কয়েন সংগ্রহ করুন।</p>
 
-<div class="card">
+<button id="bonusButton" type="button">
+CLAIM BONUS
+</button>
+
+<p id="bonusStatus" class="small"></p>
+</div>
+</section>
+
+<section class="card">
 <h2>🏆 My Profile</h2>
-<p id="status">Welcome to SK GAMING!</p>
-<button onclick="resetGame()">RESET GAME</button>
-</div>
+
+<p id="profileStatus">স্বাগতম SK GAMING-এ!</p>
+
+<button class="secondary" id="resetButton" type="button">
+RESET GAME
+</button>
+
+<p class="small">
+Reset করলে সংরক্ষিত কয়েন ও বোনাসের হিসাব মুছে যাবে।
+</p>
+</section>
+
+</main>
 
 <footer>
 SK GAMING © 2026<br>
-Safe Virtual Coin Gaming
+Safe Virtual Coin Game
 </footer>
 
 <script>
-let coins=1000;
-let claimed=false;
+const COIN_KEY = "skGamingCoins_v2";
+const BONUS_KEY = "skGamingBonusDate_v2";
 
-function update(){
-document.getElementById("coins").innerText=coins+" 🪙";
+let coins = Number(localStorage.getItem(COIN_KEY));
+
+if (!Number.isFinite(coins) || coins < 0) {
+ coins = 1000;
 }
 
-function earn(){
-coins+=10;
+const coinsEl = document.getElementById("coins");
+const statusEl = document.getElementById("status");
+const bonusStatusEl = document.getElementById("bonusStatus");
+
+function todayKey() {
+ const d = new Date();
+
+ return d.getFullYear() + "-" +
+ String(d.getMonth()+1).padStart(2,"0") + "-" +
+ String(d.getDate()).padStart(2,"0");
+}
+
+function update() {
+ coinsEl.textContent = coins.toLocaleString("en-US");
+
+ localStorage.setItem(COIN_KEY, String(coins));
+
+ const claimedToday =
+ localStorage.getItem(BONUS_KEY) === todayKey();
+
+ const bonusButton =
+ document.getElementById("bonusButton");
+
+ bonusButton.disabled = claimedToday;
+
+ bonusButton.textContent = claimedToday
+ ? "BONUS CLAIMED TODAY"
+ : "CLAIM BONUS";
+
+ bonusStatusEl.textContent = claimedToday
+ ? "আজকের বোনাস নেওয়া হয়েছে। আগামীকাল আবার আসুন।"
+ : "আজকের ১০০ কয়েনের বোনাস প্রস্তুত!";
+}
+
+// COIN CLICK GAME
+document.getElementById("coinButton")
+.addEventListener("click", function() {
+
+ coins += 10;
+
+ update();
+
+ statusEl.textContent =
+ "দারুণ! ১০টি ভার্চুয়াল কয়েন যোগ হয়েছে।";
+
+});
+
+// DAILY BONUS
+document.getElementById("bonusButton")
+.addEventListener("click", function() {
+
+ if (localStorage.getItem(BONUS_KEY) === todayKey()) {
+  bonusStatusEl.textContent =
+  "আজকের বোনাস ইতিমধ্যে নেওয়া হয়েছে।";
+  return;
+ }
+
+ coins += 100;
+
+ localStorage.setItem(BONUS_KEY, todayKey());
+
+ update();
+
+ bonusStatusEl.textContent =
+ "অভিনন্দন! ১০০ ভার্চুয়াল কয়েন যোগ হয়েছে।";
+
+});
+
+// RESET GAME
+document.getElementById("resetButton")
+.addEventListener("click", function() {
+
+ if (!confirm("গেমের সব অগ্রগতি রিসেট করবেন?")) {
+  return;
+ }
+
+ coins = 1000;
+
+ localStorage.removeItem(BONUS_KEY);
+
+ update();
+
+ statusEl.textContent =
+ "গেম রিসেট হয়েছে। আবার খেলুন!";
+
+ document.getElementById("profileStatus").textContent =
+ "আপনার গেম নতুন করে শুরু হয়েছে।";
+
+});
+
 update();
-document.getElementById("status").innerText=
-"Congratulations! You earned 10 virtual coins.";
-}
-
-function bonus(){
-if(claimed){
-alert("Bonus already collected!");
-return;
-}
-coins+=100;
-claimed=true;
-update();
-alert("100 Virtual Coins Added!");
-}
-
-function resetGame(){
-coins=1000;
-claimed=false;
-update();
-document.getElementById("status").innerText="Game reset!";
-}
 </script>
+
 </body>
 </html>

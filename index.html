@@ -4,284 +4,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SK GAMING</title>
+<title>SK GAMING - 3D SPACE</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#050810;color:white;font-family:Arial,sans-serif}
-header{background:#101a2b;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}
-.logo{font-size:23px;font-weight:900;color:#36ed9c}
-button{border:0;border-radius:10px;padding:12px 17px;background:#26dc91;color:#041b11;font-weight:bold;cursor:pointer}
+body{margin:0;background:#050711;color:white;font-family:Arial,sans-serif}
+header{padding:15px;background:#101a2b;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;color:#32f2a0;font-weight:bold}
+main{max-width:950px;margin:auto;padding:15px}
+button{border:0;border-radius:10px;padding:13px 18px;font-weight:bold;cursor:pointer;background:#28e69a;color:#06251b}
 button:active{transform:scale(.96)}
-main{max-width:1000px;margin:auto;padding:16px}
-.hero{background:linear-gradient(130deg,#103b35,#142044);padding:25px;border-radius:16px;margin-bottom:22px}
-.hero h1{font-size:28px;margin:0 0 10px}
-.small{font-size:13px;color:#b7c8d7;line-height:1.6}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
-.game{background:#121d2d;border:1px solid #293c54;border-radius:14px;padding:17px}
-.game h3{margin:9px 0}
-.emoji{font-size:42px}
+.back{background:#28374d;color:white}
+.hero{background:linear-gradient(130deg,#123a3b,#171d40);padding:24px;border-radius:16px;margin-bottom:20px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.game{background:#121e30;border:1px solid #293e59;padding:17px;border-radius:14px}
+.emoji{font-size:40px}
+.small{font-size:13px;color:#b8c6d8;line-height:1.6}
 .section{display:none}
-.back{background:#293b50;color:white;margin-bottom:15px}
-.payment-card{background:#152337;padding:19px;border-radius:14px;margin:13px 0}
-.payment-card a{color:#69d8ff}
-#stage{height:65vh;min-height:390px;max-height:680px;position:relative;border-radius:15px;overflow:hidden;background:#02030b;border:1px solid #263750}
-#stage canvas{width:100%;height:100%;display:block}
-.hud{position:absolute;top:12px;left:10px;right:10px;display:flex;justify-content:space-between;gap:7px;pointer-events:none}
-.stat{background:#08101de8;border:1px solid #33465a;padding:10px;border-radius:9px;font-size:13px;font-weight:bold}
-#message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#02040b88;text-align:center;padding:15px}
-.panel{background:#101d31ed;border:1px solid #46617e;padding:23px;border-radius:16px;max-width:310px}
-.panel h2{margin-top:0}
-.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
-.move{width:85px;height:60px;background:#243b55;color:white;font-size:23px;touch-action:none}
-#restart{background:#f5bd43;color:#241500}
-.footer{text-align:center;padding:25px;color:#91a0b5;font-size:12px}
+#stage{height:65vh;min-height:390px;max-height:650px;background:#01020a;position:relative;overflow:hidden;border-radius:15px;border:1px solid #34455d}
+#stage canvas{display:block;width:100%;height:100%}
+.hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:5px;pointer-events:none}
+.stat{background:#091326dd;border:1px solid #354d68;border-radius:8px;padding:9px;font-size:12px}
+#message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#02040a88;text-align:center;padding:15px}
+.panel{background:#101e33;border:1px solid #4b6381;padding:22px;border-radius:15px;max-width:300px}
+.controls{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
+.move{background:#253d5a;color:white;font-size:22px;width:75px;height:55px;touch-action:none}
+#restart{background:#ffc24d}
+.card{background:#142237;border-radius:14px;padding:18px;margin:12px 0}
+.footer{text-align:center;color:#8c9db2;padding:25px}
 </style>
 </head>
 <body>
-
 <header>
  <div class="logo">⚡ SK GAMING</div>
  <div>🪙 <span id="coins">1000</span></div>
 </header>
 
 <main>
-
 <section id="home">
  <div class="hero">
-  <h1>WELCOME TO SK GAMING</h1>
-  <p>YOUR 3D GAMING WORLD</p>
-  <p class="small">Play • Challenge • Enjoy</p>
-  <button onclick="showPayment()">💳 PAYMENT INFORMATION</button>
+  <h1>SK GAMING</h1>
+  <h3>YOUR 3D GAMING WORLD</h3>
+  <p class="small">Explore games and enjoy the virtual arcade.</p>
  </div>
-
  <h2>🎮 GAME ZONE</h2>
  <div class="games">
   <div class="game">
-   <div class="emoji">🚀</div>
-   <h3>3D CRASH FLIGHT</h3>
-   <p class="small">Black Space • Rocket • Explosion</p>
-   <button onclick="openFlight()">PLAY NOW</button>
+   <div class="emoji">🚀</div><h3>SPACE FLIGHT</h3>
+   <p class="small">3D Rocket Adventure</p>
+   <button onclick="openGame()">PLAY NOW</button>
   </div>
-
-  <div class="game">
-   <div class="emoji">⚽</div>
-   <h3>FOOTBALL</h3>
-   <p class="small">Football game</p>
-   <button onclick="comingSoon()">PLAY</button>
-  </div>
-
-  <div class="game">
-   <div class="emoji">🏎️</div>
-   <h3>CAR RACING</h3>
-   <p class="small">Racing game</p>
-   <button onclick="comingSoon()">PLAY</button>
-  </div>
-
-  <div class="game">
-   <div class="emoji">🏏</div>
-   <h3>CRICKET</h3>
-   <p class="small">Cricket game</p>
-   <button onclick="comingSoon()">PLAY</button>
-  </div>
-
-  <div class="game">
-   <div class="emoji">🏀</div>
-   <h3>BASKETBALL</h3>
-   <p class="small">Coming soon</p>
-  </div>
+  <div class="game"><div class="emoji">⚽</div><h3>FOOTBALL</h3><p class="small">Coming soon</p></div>
+  <div class="game"><div class="emoji">🏎️</div><h3>RACING</h3><p class="small">Coming soon</p></div>
+  <div class="game"><div class="emoji">🏏</div><h3>CRICKET</h3><p class="small">Coming soon</p></div>
  </div>
-
  <div class="footer">SK GAMING © 2026</div>
-</section>
-
-<section id="payment" class="section">
- <button class="back" onclick="goHome()">← HOME</button>
- <h2>💳 PAYMENT INFORMATION</h2>
-
- <div class="payment-card">
-  <h2 style="color:#e75c9a">বিকাশ | bKash</h2>
-  <p>বিকাশের অফিসিয়াল তথ্য ও সেবা।</p>
-  <a href="https://www.bkash.com/" target="_blank">Official bKash Website</a>
- </div>
-
- <div class="payment-card">
-  <h2 style="color:#ff9d45">নগদ | Nagad</h2>
-  <p>নগদের অফিসিয়াল তথ্য ও সেবা।</p>
-  <a href="https://nagad.com.bd/" target="_blank">Official Nagad Website</a>
- </div>
-
- <p class="small">এই বিভাগ শুধু তথ্য প্রদর্শনের জন্য। গেমে বাস্তব টাকা জমা, বাজি বা ক্যাশ আউট নেই।</p>
 </section>
 
 <section id="flight" class="section">
  <button class="back" onclick="goHome()">← HOME</button>
- <h2>🚀 SK SPACE CRASH</h2>
-
+ <h2>🚀 3D SPACE FLIGHT</h2>
  <div id="stage">
   <div class="hud">
-   <div class="stat">⭐ SCORE: <span id="score">0</span></div>
-   <div class="stat">📈 RISE: <span id="multiplier">1.00</span>x</div>
-   <div class="stat">ALTITUDE: <span id="altitude">0</span></div>
+   <div class="stat">SCORE: <b id="score">0</b></div>
+   <div class="stat">RISE: <b id="mult">1.00</b>x</div>
+   <div class="stat">TIME: <b id="time">0</b>s</div>
   </div>
-
   <div id="message">
    <div class="panel">
-    <h2>🚀 SPACE FLIGHT</h2>
-    <p>কালো মহাকাশে রকেট উড়ান। তারা সংগ্রহ করুন এবং পাথর এড়িয়ে চলুন!</p>
-    <button onclick="startFlight()">START FLIGHT</button>
+    <h2>🚀 SPACE MISSION</h2>
+    <p>রকেট চালান, তারা সংগ্রহ করুন এবং বাধা এড়িয়ে চলুন।</p>
+    <button onclick="startGame()">START GAME</button>
    </div>
   </div>
  </div>
-
  <div class="controls">
   <button class="move" id="left">◀</button>
-  <button id="restart" onclick="startFlight()">RESTART</button>
+  <button id="restart" onclick="startGame()">RESTART</button>
   <button class="move" id="right">▶</button>
  </div>
-
- <p class="small">বাম ও ডান বাটন ধরে রকেট চালান। কম্পিউটারে Arrow Key ব্যবহার করুন। ১২ সেকেন্ড পর এই সংস্করণে নির্ধারিত বিস্ফোরণ ঘটবে।</p>
+ <p class="small">বাম ও ডান বোতাম ধরে রকেট চালান। এটি একটি ভার্চুয়াল পয়েন্টের আর্কেড গেম।</p>
 </section>
-
 </main>
 
 <script>
-function hideSections(){
- ["home","payment","flight"].forEach(id=>{
-  document.getElementById(id).style.display="none";
- });
+function show(id){
+ ["home","flight"].forEach(x=>document.getElementById(x).style.display="none");
+ document.getElementById(id).style.display="block";
 }
-function goHome(){
- if(window.stopFlight)window.stopFlight();
- hideSections();
- document.getElementById("home").style.display="block";
-}
-function showPayment(){
- hideSections();
- document.getElementById("payment").style.display="block";
-}
-function openFlight(){
- hideSections();
- document.getElementById("flight").style.display="block";
- if(window.initWorld)window.initWorld();
-}
-function comingSoon(){
- alert("এই গেমটি পরবর্তী সংস্করণে তৈরি হবে।");
-}
+function goHome(){stopGame();show("home")}
+function openGame(){show("flight");initGame()}
 </script>
 
 <script type="importmap">
-{
- "imports":{
-  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
- }
-}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
 </script>
 
 <script type="module">
 import * as THREE from "three";
 
 const stage=document.getElementById("stage");
-const message=document.getElementById("message");
-const scoreText=document.getElementById("score");
-const altitudeText=document.getElementById("altitude");
-const multiplierText=document.getElementById("multiplier");
+const msg=document.getElementById("message");
+const scoreEl=document.getElementById("score");
+const multEl=document.getElementById("mult");
+const timeEl=document.getElementById("time");
 
-let scene,camera,renderer,rocket,flame;
-let stars,sparks=[],starObjects=[],rocks=[];
-let active=false,score=0,altitude=0,flightTime=0,last=0,frame=null;
-let audio=null;
-const keys={};
+let scene,camera,renderer,rocket,flame,stars,nebula;
+let particles=[],rocks=[],collectibles=[];
+let running=false,elapsed=0,score=0,last=0,raf;
+let sound;
+const keys={left:false,right:false};
 
-function initWorld(){
- if(renderer){resize();return;}
-
+function initGame(){
+ if(renderer){resize();return}
  scene=new THREE.Scene();
- scene.background=new THREE.Color(0x02030b);
- scene.fog=new THREE.FogExp2(0x02030b,.003);
+ scene.background=new THREE.Color(0x01020b);
+ scene.fog=new THREE.FogExp2(0x01020b,.0025);
 
- camera=new THREE.PerspectiveCamera(65,1,.1,300);
- camera.position.set(-7,-2,15);
+ camera=new THREE.PerspectiveCamera(60,1,.1,400);
+ camera.position.set(-7,-2,17);
 
  renderer=new THREE.WebGLRenderer({antialias:true});
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
  stage.insertBefore(renderer.domElement,stage.firstChild);
 
- scene.add(new THREE.AmbientLight(0xffffff,1.3));
+ scene.add(new THREE.AmbientLight(0x8799ff,1.3));
 
- const light=new THREE.PointLight(0x6688ff,5,60);
- light.position.set(2,8,8);
- scene.add(light);
+ let glow=new THREE.PointLight(0x3b69ff,8,80);
+ glow.position.set(0,10,8);scene.add(glow);
 
- // Star field
- const positions=[];
- for(let i=0;i<1800;i++){
-  positions.push(
-   (Math.random()-.5)*110,
-   (Math.random()-.5)*150,
-   -Math.random()*65
-  );
+ // Space stars
+ let pos=[];
+ for(let i=0;i<2400;i++){
+  pos.push((Math.random()-.5)*150,(Math.random()-.5)*180,-Math.random()*90);
  }
-
- const geometry=new THREE.BufferGeometry();
- geometry.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));
-
- stars=new THREE.Points(
-  geometry,
-  new THREE.PointsMaterial({
-   color:0xffffff,
-   size:.17,
-   transparent:true,
-   opacity:.95
-  })
- );
+ let sg=new THREE.BufferGeometry();
+ sg.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+ stars=new THREE.Points(sg,new THREE.PointsMaterial({
+  color:0xffffff,size:.16,transparent:true,opacity:.95
+ }));
  scene.add(stars);
 
- // Rocket body
- rocket=new THREE.Group();
-
- const body=new THREE.Mesh(
-  new THREE.CylinderGeometry(.38,.48,2,24),
-  new THREE.MeshStandardMaterial({
-   color:0xe7edf8,metalness:.65,roughness:.25
-  })
- );
- rocket.add(body);
-
- const nose=new THREE.Mesh(
-  new THREE.ConeGeometry(.38,.85,24),
-  new THREE.MeshStandardMaterial({color:0xff3030})
- );
- nose.position.y=1.42;
- rocket.add(nose);
-
- const windowMesh=new THREE.Mesh(
-  new THREE.SphereGeometry(.19,20,16),
-  new THREE.MeshStandardMaterial({
-   color:0x18baff,metalness:.6,roughness:.15
-  })
- );
- windowMesh.position.set(0,.35,.4);
- rocket.add(windowMesh);
-
- const finMaterial=new THREE.MeshStandardMaterial({color:0x167bff});
- for(let i=0;i<3;i++){
-  const fin=new THREE.Mesh(
-   new THREE.BoxGeometry(.15,.75,.6),finMaterial
-  );
-  const a=i*Math.PI*2/3;
-  fin.position.set(Math.sin(a)*.42,-.65,Math.cos(a)*.42);
-  fin.rotation.y=a;
-  rocket.add(fin);
+ // Nebula clouds
+ const cloudMat=new THREE.MeshBasicMaterial({
+  color:0x27115b,transparent:true,opacity:.13,side:THREE.DoubleSide
+ });
+ for(let i=0;i<9;i++){
+  const cloud=new THREE.Mesh(new THREE.CircleGeometry(5+Math.random()*6,40),cloudMat);
+  cloud.position.set((Math.random()-.5)*45,(Math.random()-.5)*80,-25-Math.random()*25);
+  scene.add(cloud);
  }
 
- flame=new THREE.Mesh(
-  new THREE.ConeGeometry(.28,1.4,20),
-  new THREE.MeshBasicMaterial({color:0xff7200})
- );
- flame.position.y=-1.65;
- flame.rotation.z=Math.PI;
+ rocket=new THREE.Group();
+ const white=new THREE.MeshStandardMaterial({color:0xe6edf8,metalness:.65,roughness:.25});
+ const red=new THREE.MeshStandardMaterial({color:0xff3434,metalness:.3});
+ const body=new THREE.Mesh(new THREE.CylinderGeometry(.42,.48,2.3,28),white);
+ rocket.add(body);
+
+ let nose=new THREE.Mesh(new THREE.ConeGeometry(.42,.9,28),red);
+ nose.position.y=1.6;rocket.add(nose);
+
+ let glass=new THREE.Mesh(new THREE.SphereGeometry(.2,24,20),
+  new THREE.MeshStandardMaterial({color:0x19caff,metalness:.5,roughness:.12}));
+ glass.position.set(0,.4,.42);rocket.add(glass);
+
+ for(let i=0;i<3;i++){
+  let fin=new THREE.Mesh(new THREE.BoxGeometry(.17,.8,.6),red);
+  let a=i*Math.PI*2/3;
+  fin.position.set(Math.sin(a)*.43,-.7,Math.cos(a)*.43);
+  fin.rotation.y=a;rocket.add(fin);
+ }
+
+ flame=new THREE.Mesh(new THREE.ConeGeometry(.32,1.5,24),
+  new THREE.MeshBasicMaterial({color:0xff7100}));
+ flame.position.y=-1.9;flame.rotation.z=Math.PI;
  rocket.add(flame);
 
+ const innerFlame=new THREE.Mesh(new THREE.ConeGeometry(.15,1,20),
+  new THREE.MeshBasicMaterial({color:0xffee68}));
+ innerFlame.position.y=-1.72;innerFlame.rotation.z=Math.PI;
+ rocket.add(innerFlame);
  scene.add(rocket);
  resize();
  window.addEventListener("resize",resize);
@@ -289,288 +190,159 @@ function initWorld(){
 
 function resize(){
  if(!renderer)return;
- const w=stage.clientWidth,h=stage.clientHeight;
- camera.aspect=w/h;
+ camera.aspect=stage.clientWidth/stage.clientHeight;
  camera.updateProjectionMatrix();
- renderer.setSize(w,h,false);
+ renderer.setSize(stage.clientWidth,stage.clientHeight,false);
 }
 
-function clearObjects(){
- [...sparks,...starObjects,...rocks].forEach(o=>scene.remove(o));
- sparks=[];starObjects=[];rocks=[];
-}
-
-function makeStar(){
- const obj=new THREE.Mesh(
-  new THREE.IcosahedronGeometry(.3,1),
-  new THREE.MeshBasicMaterial({color:0xffe46b})
- );
- obj.position.set(
-  (Math.random()-.5)*13,
-  rocket.position.y+13+Math.random()*9,
-  -3-Math.random()*4
- );
- scene.add(obj);
- starObjects.push(obj);
+function clearWorld(){
+ [...particles,...rocks,...collectibles].forEach(o=>scene.remove(o));
+ particles=[];rocks=[];collectibles=[];
 }
 
 function makeRock(){
- const obj=new THREE.Mesh(
-  new THREE.DodecahedronGeometry(.7+Math.random()*.45,1),
-  new THREE.MeshStandardMaterial({color:0x677387,roughness:1})
- );
- obj.position.set(
-  (Math.random()-.5)*13,
-  rocket.position.y+20+Math.random()*8,
-  -2
- );
- scene.add(obj);
- rocks.push(obj);
+ const r=new THREE.Mesh(new THREE.DodecahedronGeometry(.65+Math.random()*.5,1),
+ new THREE.MeshStandardMaterial({color:0x737d8d,roughness:1}));
+ r.position.set((Math.random()-.5)*12,rocket.position.y+19,-2);
+ scene.add(r);rocks.push(r);
+}
+function makeCoin(){
+ const c=new THREE.Mesh(new THREE.IcosahedronGeometry(.35,1),
+ new THREE.MeshStandardMaterial({color:0xffd34e,emissive:0x8a4b00}));
+ c.position.set((Math.random()-.5)*10,rocket.position.y+15,-2);
+ scene.add(c);collectibles.push(c);
 }
 
 function explosionSound(){
  try{
-  if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();
-  if(audio.state==="suspended")audio.resume();
-
-  const now=audio.currentTime;
-  const osc=audio.createOscillator();
-  const gain=audio.createGain();
-
+  if(!sound)sound=new AudioContext();
+  if(sound.state==="suspended")sound.resume();
+  let t=sound.currentTime;
+  let osc=sound.createOscillator(),gain=sound.createGain();
   osc.type="sawtooth";
-  osc.frequency.setValueAtTime(110,now);
-  osc.frequency.exponentialRampToValueAtTime(35,now+.7);
-
-  gain.gain.setValueAtTime(.001,now);
-  gain.gain.linearRampToValueAtTime(.25,now+.04);
-  gain.gain.exponentialRampToValueAtTime(.001,now+.8);
-
-  osc.connect(gain);
-  gain.connect(audio.destination);
-  osc.start(now);
-  osc.stop(now+.85);
-
-  const buffer=audio.createBuffer(1,audio.sampleRate*.4,audio.sampleRate);
-  const data=buffer.getChannelData(0);
-  for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;
-
-  const noise=audio.createBufferSource();
-  const ng=audio.createGain();
-  noise.buffer=buffer;
-  ng.gain.setValueAtTime(.14,now);
-  ng.gain.exponentialRampToValueAtTime(.001,now+.4);
-  noise.connect(ng);
-  ng.connect(audio.destination);
-  noise.start(now);
- }catch(e){
-  console.log("Audio unavailable",e);
- }
+  osc.frequency.setValueAtTime(130,t);
+  osc.frequency.exponentialRampToValueAtTime(30,t+.8);
+  gain.gain.setValueAtTime(.001,t);
+  gain.gain.linearRampToValueAtTime(.22,t+.03);
+  gain.gain.exponentialRampToValueAtTime(.001,t+.9);
+  osc.connect(gain);gain.connect(sound.destination);
+  osc.start(t);osc.stop(t+.9);
+ }catch(e){}
 }
 
-function createExplosion(){
- const colors=[0xff3200,0xff8500,0xffd700,0xffffff];
-
- for(let i=0;i<180;i++){
-  const p=new THREE.Mesh(
-   new THREE.SphereGeometry(.06+Math.random()*.09,6,6),
-   new THREE.MeshBasicMaterial({
-    color:colors[Math.floor(Math.random()*colors.length)]
-   })
-  );
-
+function explode(){
+ for(let i=0;i<230;i++){
+  let p=new THREE.Mesh(new THREE.SphereGeometry(.045+Math.random()*.09,7,7),
+  new THREE.MeshBasicMaterial({color:[0xff2900,0xff7800,0xffd52c,0xffffff][i%4]}));
   p.position.copy(rocket.position);
-  p.userData.velocity=new THREE.Vector3(
-   (Math.random()-.5)*13,
-   (Math.random()-.5)*13,
-   (Math.random()-.5)*9
-  );
-  p.userData.life=1.2+Math.random()*1.2;
-  scene.add(p);
-  sparks.push(p);
+  p.userData.v=new THREE.Vector3((Math.random()-.5)*15,(Math.random()-.5)*15,(Math.random()-.5)*9);
+  p.userData.life=1.8+Math.random();
+  scene.add(p);particles.push(p);
  }
-
- const flash=new THREE.PointLight(0xff5a00,15,30);
- flash.position.copy(rocket.position);
- scene.add(flash);
- setTimeout(()=>scene.remove(flash),450);
-
+ let light=new THREE.PointLight(0xff5b12,30,45);
+ light.position.copy(rocket.position);scene.add(light);
+ setTimeout(()=>scene.remove(light),500);
  explosionSound();
 }
 
-function startFlight(){
- initWorld();
- clearObjects();
-
- score=0;
- altitude=0;
- flightTime=0;
-
+function startGame(){
+ initGame();clearWorld();
  rocket.position.set(-5,-5,0);
- rocket.rotation.z=-.42;
-
- camera.position.set(-7,-2,15);
- camera.lookAt(-5,-5,0);
-
- scoreText.textContent="0";
- altitudeText.textContent="0";
- multiplierText.textContent="1.00";
-
- active=true;
- message.style.display="none";
-
+ rocket.rotation.z=-.3;
+ camera.position.set(-7,-2,17);
+ score=0;elapsed=0;running=true;
+ scoreEl.textContent="0";timeEl.textContent="0";multEl.textContent="1.00";
+ msg.style.display="none";
  last=performance.now();
- cancelAnimationFrame(frame);
- frame=requestAnimationFrame(loop);
+ cancelAnimationFrame(raf);
+ raf=requestAnimationFrame(loop);
 }
 
-function crash(){
- if(!active)return;
- active=false;
-
- createExplosion();
-
- message.style.display="flex";
- message.innerHTML=`
-  <div class="panel">
-   <h2>💥 ROCKET EXPLODED!</h2>
-   <p>আপনার স্কোর: <b>${score}</b></p>
-   <p>⭐ সংগ্রহ করা পয়েন্ট: ${score}</p>
-   <button onclick="startFlight()">PLAY AGAIN</button>
-  </div>`;
-
- frame=requestAnimationFrame(sparkLoop);
+function finishGame(){
+ if(!running)return;
+ running=false;explode();
+ msg.style.display="flex";
+ msg.innerHTML=`<div class="panel"><h2>💥 FLIGHT COMPLETE</h2><p>আপনার স্কোর: <b>${score}</b></p><button onclick="startGame()">PLAY AGAIN</button></div>`;
+ raf=requestAnimationFrame(particleLoop);
 }
 
-function sparkLoop(){
+function particleLoop(){
  let alive=false;
- const dt=.025;
-
- for(let i=sparks.length-1;i>=0;i--){
-  const p=sparks[i];
-  p.position.addScaledVector(p.userData.velocity,dt);
-  p.userData.velocity.y-=2.5*dt;
-  p.userData.life-=dt;
-  p.scale.multiplyScalar(.985);
-
-  if(p.userData.life<=0){
-   scene.remove(p);
-   sparks.splice(i,1);
-  }else alive=true;
+ for(let i=particles.length-1;i>=0;i--){
+  let p=particles[i];
+  p.position.addScaledVector(p.userData.v,.025);
+  p.userData.v.y-=.06;
+  p.userData.life-=.025;
+  p.scale.multiplyScalar(.99);
+  if(p.userData.life<=0){scene.remove(p);particles.splice(i,1)}
+  else alive=true;
  }
-
  renderer.render(scene,camera);
- if(alive)frame=requestAnimationFrame(sparkLoop);
+ if(alive)raf=requestAnimationFrame(particleLoop);
 }
 
 function loop(now){
- if(!active)return;
+ if(!running)return;
+ let dt=Math.min((now-last)/1000,.04);last=now;
+ elapsed+=dt;
 
- const dt=Math.min((now-last)/1000,.04);
- last=now;
- flightTime+=dt;
+ let move=(keys.right?1:0)-(keys.left?1:0);
+ rocket.position.x+=move*4*dt+1.4*dt;
+ rocket.position.y+=2.7*dt;
+ rocket.rotation.z=THREE.MathUtils.lerp(rocket.rotation.z,-.25,.04);
 
- const direction=(keys.ArrowRight?1:0)-(keys.ArrowLeft?1:0);
+ flame.scale.y=.7+Math.random()*.8;
+ flame.scale.x=.7+Math.random()*.4;
 
- rocket.position.x+= (2.2+direction*1.5)*dt;
- rocket.position.y+=2.8*dt;
-
- altitude+=2.8*dt;
- score=Math.floor(flightTime*10);
-
- scoreText.textContent=score;
- altitudeText.textContent=Math.floor(altitude*10);
- multiplierText.textContent=(1+flightTime*.12).toFixed(2);
-
- flame.scale.y=.7+Math.random()*.6;
- flame.scale.x=.75+Math.random()*.35;
-
- camera.position.x=THREE.MathUtils.lerp(
-  camera.position.x,rocket.position.x-2,.04
- );
- camera.position.y=THREE.MathUtils.lerp(
-  camera.position.y,rocket.position.y-1,.04
- );
+ camera.position.x=THREE.MathUtils.lerp(camera.position.x,rocket.position.x-2,.06);
+ camera.position.y=THREE.MathUtils.lerp(camera.position.y,rocket.position.y-1,.06);
  camera.lookAt(rocket.position.x+2,rocket.position.y+2,-3);
 
- // Stars shimmer
- stars.rotation.z+=dt*.002;
-
- if(Math.random()<dt*2.5)makeStar();
+ stars.rotation.z+=dt*.001;
+ if(Math.random()<dt*2.2)makeCoin();
  if(Math.random()<dt*.65)makeRock();
 
- for(let i=starObjects.length-1;i>=0;i--){
-  const s=starObjects[i];
-  s.rotation.y+=dt*2;
-
-  if(s.position.distanceTo(rocket.position)<1.1){
-   score+=10;
-   scoreText.textContent=score;
-   scene.remove(s);
-   starObjects.splice(i,1);
-  }else if(s.position.y<rocket.position.y-10){
-   scene.remove(s);
-   starObjects.splice(i,1);
-  }
- }
-
  for(let i=rocks.length-1;i>=0;i--){
-  const r=rocks[i];
-  r.rotation.x+=dt;
-  r.rotation.y+=dt;
-
-  if(r.position.distanceTo(rocket.position)<1.1){
-   crash();
-   return;
-  }
-
-  if(r.position.y<rocket.position.y-10){
-   scene.remove(r);
-   rocks.splice(i,1);
+  let r=rocks[i];r.rotation.x+=dt;r.rotation.y+=dt;
+  if(r.position.distanceTo(rocket.position)<1.05){finishGame();return}
+  if(r.position.y<rocket.position.y-10){scene.remove(r);rocks.splice(i,1)}
+ }
+ for(let i=collectibles.length-1;i>=0;i--){
+  let c=collectibles[i];c.rotation.y+=dt*3;
+  if(c.position.distanceTo(rocket.position)<1.1){
+   score+=10;scene.remove(c);collectibles.splice(i,1);
+  }else if(c.position.y<rocket.position.y-10){
+   scene.remove(c);collectibles.splice(i,1);
   }
  }
 
+ scoreEl.textContent=score;
+ timeEl.textContent=Math.floor(elapsed);
+ multEl.textContent=(1+elapsed*.12).toFixed(2);
  renderer.render(scene,camera);
 
- // Demo version: fixed-duration flight
- if(flightTime>=12){
-  crash();
-  return;
- }
-
- frame=requestAnimationFrame(loop);
+ if(elapsed>=18){finishGame();return}
+ raf=requestAnimationFrame(loop);
 }
 
-function stopFlight(){
- active=false;
- cancelAnimationFrame(frame);
+function stopGame(){running=false;cancelAnimationFrame(raf)}
+function bind(id,side){
+ let el=document.getElementById(id);
+ el.addEventListener("pointerdown",e=>{e.preventDefault();keys[side]=true;el.setPointerCapture(e.pointerId)});
+ ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>el.addEventListener(ev,()=>keys[side]=false));
 }
-
-function bindButton(id,key){
- const el=document.getElementById(id);
- el.addEventListener("pointerdown",e=>{
-  e.preventDefault();
-  keys[key]=true;
-  el.setPointerCapture(e.pointerId);
- });
- ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>{
-  el.addEventListener(ev,()=>keys[key]=false);
- });
-}
-
-bindButton("left","ArrowLeft");
-bindButton("right","ArrowRight");
-
+bind("left","left");bind("right","right");
 window.addEventListener("keydown",e=>{
- keys[e.key]=true;
+ if(e.key==="ArrowLeft")keys.left=true;
+ if(e.key==="ArrowRight")keys.right=true;
 });
 window.addEventListener("keyup",e=>{
- keys[e.key]=false;
+ if(e.key==="ArrowLeft")keys.left=false;
+ if(e.key==="ArrowRight")keys.right=false;
 });
-
-window.initWorld=initWorld;
-window.startFlight=startFlight;
-window.stopFlight=stopFlight;
+window.initGame=initGame;
+window.startGame=startGame;
+window.stopGame=stopGame;
 </script>
-
 </body>
 </html>

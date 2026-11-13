@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK GAMING</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d18;color:white;font-family:Arial;text-align:center}
+header{background:#171e30;padding:25px;color:#ffd700}
+h1{margin:0;font-size:30px}
+.card{background:#171e30;margin:18px;padding:22px;border-radius:16px}
+.coins{font-size:30px;color:#ffd700;font-weight:bold}
+button{background:#ffd700;color:#111;border:0;padding:13px 25px;border-radius:9px;font-weight:bold;margin:8px;font-size:16px}
+.game{background:#222e45;padding:20px;border-radius:12px;margin:12px 0}
+footer{padding:25px;color:#aaa}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 SK GAMING</h1>
+<p>Play • Enjoy • Win Virtual Coins</p>
+</header>
+
+<div class="card">
+<h2>👤 My Account</h2>
+<p>Virtual Coin Balance</p>
+<div class="coins" id="coins">1000 🪙</div>
+</div>
+
+<div class="card">
+<h2>🎯 Choose Your Game</h2>
+<div class="game">
+<h3>🪙 Coin Click</h3>
+<p>Click and collect virtual coins!</p>
+<button onclick="earn()">PLAY GAME</button>
+</div>
+<div class="game">
+<h3>🎁 Daily Bonus</h3>
+<p>Collect your daily virtual reward</p>
+<button onclick="bonus()">CLAIM BONUS</button>
+</div>
+</div>
+
+<div class="card">
+<h2>🏆 My Profile</h2>
+<p id="status">Welcome to SK GAMING!</p>
+<button onclick="resetGame()">RESET GAME</button>
+</div>
+
+<footer>
+SK GAMING © 2026<br>
+Safe Virtual Coin Gaming
+</footer>
+
+<script>
+let coins=1000;
+let claimed=false;
+
+function update(){
+document.getElementById("coins").innerText=coins+" 🪙";
+}
+
+function earn(){
+coins+=10;
+update();
+document.getElementById("status").innerText=
+"Congratulations! You earned 10 virtual coins.";
+}
+
+function bonus(){
+if(claimed){
+alert("Bonus already collected!");
+return;
+}
+coins+=100;
+claimed=true;
+update();
+alert("100 Virtual Coins Added!");
+}
+
+function resetGame(){
+coins=1000;
+claimed=false;
+update();
+document.getElementById("status").innerText="Game reset!";
+}
+</script>
+</body>
+</html>

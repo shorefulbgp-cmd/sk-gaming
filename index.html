@@ -4,349 +4,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
 <title>SK GAMING VIP</title>
 <style>
-:root{--gold:#e8bd55;--gold2:#ffdf83}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top,#292012,#090909 48%);color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:24px 14px;background:#101010;border-bottom:1px solid #55421d}
-.logo{font-size:30px;font-weight:900;letter-spacing:2px;color:var(--gold2)}
-header p{color:#d5c7a5}
-.wrap{max-width:850px;margin:18px auto;padding:0 13px}
-.balance{background:linear-gradient(135deg,#2c2110,#111);border:1px solid #806027;border-radius:18px;padding:17px;text-align:center}
-.amount{font-size:32px;font-weight:800;color:var(--gold2);margin-top:5px}
-.notice{font-size:12px;color:#c8bea9;line-height:1.5;margin-top:8px}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
-button{border:0;border-radius:12px;padding:13px 17px;margin:5px;background:linear-gradient(135deg,#ffe49a,#bd862b);color:#1b1408;font-weight:800;font-size:15px;cursor:pointer}
-button:disabled{opacity:.45}
-.tab{border:1px solid #5d4821;background:#17130d;color:#f6d98e;padding:12px 5px}
-.tab.active{background:linear-gradient(135deg,#f2d17a,#a97821);color:#171006}
-.panel{display:none;background:#171717;border:1px solid #4c3a1b;border-radius:18px;padding:18px;margin-bottom:14px;text-align:center}
-.panel.active{display:block}
-h2{color:var(--gold2)}
-.gamebox{background:#0e0e0e;border:1px solid #3e321c;border-radius:15px;padding:15px;margin:12px 0}
-.status{min-height:24px;color:#d8c89f;font-size:14px}
-.secondary{background:#393329;color:white}
-.danger{background:#5a2722;color:white}
-#crashStage{height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#100d09;border-radius:14px}
-#rocket{font-size:48px}
-#multiplier{font-size:36px;color:var(--gold2);font-weight:900}
-#wheel,#diceFace{font-size:76px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:360px;margin:14px auto}
-.tile{height:66px;font-size:25px;padding:0;background:#302719;color:#ffdf83;border:1px solid #806027}
-.tile.revealed{background:#51401e}
-.bigcoin{font-size:68px;width:130px;height:130px;border-radius:50%;padding:0}
-.stat{color:#b9b1a0;font-size:13px}
-footer{text-align:center;color:#9e9279;font-size:12px;padding:20px}
-@media(max-width:420px){.tabs{gap:5px}.tab{font-size:12px;padding:11px 2px}.panel{padding:13px}.tile{height:58px}}
+body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:22px;background:#17120a;border-bottom:2px solid #d6a52b}
+h1{color:#ffd34d;margin:0;font-size:30px}
+header p{color:#c9b477;margin:8px 0 0}
+.balance{margin:16px;padding:18px;text-align:center;background:#201a0b;border:1px solid #d6a52b;border-radius:14px}
+.balance strong{display:block;color:#ffd34d;font-size:30px;margin-top:8px}
+main{padding:12px;max-width:650px;margin:auto}
+.game{background:#171717;border:1px solid #5c481b;border-radius:14px;padding:17px;margin:14px 0;text-align:center}
+h2{color:#ffd34d;margin-top:0}
+button{background:linear-gradient(120deg,#ffd34d,#b77c08);border:0;border-radius:9px;padding:12px 18px;font-weight:bold;margin:5px;color:#171000;font-size:15px}
+button:disabled{opacity:.5}
+.result{color:#ffd34d;min-height:24px;margin:12px}
+.rocket{font-size:50px;margin:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.tile{font-size:25px;padding:15px 2px;background:#282317;color:white;border:1px solid #a17b25;border-radius:8px}
+footer{text-align:center;color:#aaa;padding:20px;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">♛ SK GAMING VIP</div>
-<p>Play • Learn • Collect Virtual Points</p>
+<h1>👑 SK GAMING VIP</h1>
+<p>Play • Enjoy • Earn Virtual Points</p>
 </header>
+<main>
+<div class="balance">
+আপনার ভার্চুয়াল কয়েন
+<strong id="coins">1000</strong>
+</div>
 
-<div class="wrap">
-<section class="balance">
-<small>YOUR VIRTUAL POINTS</small>
-<div class="amount"><span id="balance">1000</span> 🪙</div>
-<div class="notice">শুধু বিনোদনের জন্য ভার্চুয়াল পয়েন্ট। বাস্তব টাকা, বাজি, জমা বা ক্যাশ আউট নেই।</div>
+<section class="game">
+<h2>🚀 Crash Arcade</h2>
+<div class="rocket" id="rocket">🚀</div>
+<div id="flight">উড়ান শুরু করতে Play চাপুন</div>
+<button id="start" onclick="startFlight()">PLAY</button>
+<button id="stop" onclick="stopFlight()" disabled>STOP</button>
+<div class="result" id="crashResult"></div>
 </section>
 
-<nav class="tabs">
-<button class="tab active" data-tab="crash">🚀 Crash</button>
-<button class="tab" data-tab="spin">🎡 Skill Wheel</button>
-<button class="tab" data-tab="dice">🎲 Dice</button>
-<button class="tab" data-tab="memory">🃏 Memory</button>
-<button class="tab" data-tab="click">🪙 Coin Tap</button>
-<button class="tab" data-tab="profile">🏆 Profile</button>
-</nav>
-
-<section class="panel active" id="crash">
-<h2>🚀 Rocket Crash Arcade</h2>
-<p>রকেটের উড়ান দেখুন এবং রাউন্ড শেষ হওয়ার আগে থামানোর চেষ্টা করুন। কোনো পয়েন্ট ঝুঁকিতে রাখা হয় না।</p>
-<div class="gamebox">
-<div id="crashStage">
-<div id="rocket">🚀</div>
-<div id="multiplier">1.00x</div>
-</div>
-<div class="status" id="crashStatus">শুরু চাপলে রকেট উড়বে।</div>
-<button id="startCrash">START FLIGHT</button>
-<button id="stopCrash" class="secondary" disabled>STOP FLIGHT</button>
-<div class="stat">সেরা উড়ান: <span id="bestFlight">0.00x</span></div>
-</div>
-</section>
-
-<section class="panel" id="spin">
-<h2>🎡 Skill Wheel</h2>
-<p>চাকা ঘুরিয়ে বিনামূল্যে ভার্চুয়াল পয়েন্ট সংগ্রহ করুন।</p>
-<div class="gamebox">
-<div id="wheel">🎡</div>
-<div class="status" id="wheelStatus">SPIN চাপুন।</div>
-<button id="spinButton">SPIN WHEEL</button>
-</div>
-</section>
-
-<section class="panel" id="dice">
-<h2>🎲 Dice Puzzle</h2>
-<p>পাশা ফেলুন। ৪, ৫ বা ৬ এলে ২০ পয়েন্ট, অন্য ফলেও ৫ পয়েন্ট পাবেন।</p>
-<div class="gamebox">
-<div id="diceFace">🎲</div>
-<div class="status" id="diceStatus">আপনার পালা!</div>
-<button id="rollDice">ROLL DICE</button>
-</div>
-</section>
-
-<section class="panel" id="memory">
-<h2>🃏 Memory Match</h2>
-<p>একই রকম দুটি কার্ড খুঁজে জোড়া মেলান। সব জোড়া মিললে ৫০ পয়েন্ট পাবেন।</p>
-<div class="gamebox">
-<div class="grid" id="memoryGrid"></div>
-<div class="status" id="memoryStatus">কার্ড খুলে জোড়া মেলান।</div>
-<button id="newMemory" class="secondary">NEW ROUND</button>
-</div>
-</section>
-
-<section class="panel" id="click">
+<section class="game">
 <h2>🪙 Coin Tap</h2>
-<p>প্রতি ট্যাপে ১০টি ভার্চুয়াল পয়েন্ট।</p>
-<button class="bigcoin" id="tapCoin">🪙</button>
-<div class="status" id="tapStatus">ট্যাপ করে পয়েন্ট সংগ্রহ করুন।</div>
+<p>প্রতিবার ট্যাপ করলে ১০ পয়েন্ট পাবেন।</p>
+<button onclick="addCoins(10)">TAP COIN +10</button>
 </section>
 
-<section class="panel" id="profile">
-<h2>🏆 Player Profile</h2>
-<div class="gamebox">
-<p>মোট ভার্চুয়াল পয়েন্ট</p>
-<div class="amount" id="profileBalance">1000</div>
-<p class="stat">সেরা রকেট উড়ান: <span id="profileBest">0.00x</span></p>
-<button id="dailyBonus">🎁 CLAIM DAILY BONUS</button>
-<div class="status" id="bonusStatus"></div>
-<button class="danger" id="resetGame">RESET LOCAL GAME</button>
-<p class="notice">রিসেট করলে এই ব্রাউজারে সংরক্ষিত গেমের অগ্রগতি মুছে যাবে।</p>
-</div>
+<section class="game">
+<h2>🎯 Skill Wheel</h2>
+<div style="font-size:45px">🎡</div>
+<button onclick="spinWheel()">SPIN</button>
+<div class="result" id="wheelResult"></div>
 </section>
-</div>
 
-<footer>SK GAMING VIP © 2026 · Safe virtual-points arcade</footer>
+<section class="game">
+<h2>🎲 Dice Puzzle</h2>
+<p>পাশা ঘুরিয়ে সংখ্যা দেখুন।</p>
+<div class="rocket" id="dice">🎲</div>
+<button onclick="rollDice()">ROLL DICE</button>
+<div class="result" id="diceResult"></div>
+</section>
+
+<section class="game">
+<h2>🧠 Memory Match</h2>
+<p>একই রকম দুটি কার্ড খুঁজুন।</p>
+<div class="grid" id="memory"></div>
+<div class="result" id="memoryResult"></div>
+<button onclick="newMemory()">NEW GAME</button>
+</section>
+
+<section class="game">
+<h2>🎁 Daily Bonus</h2>
+<p>প্রতিদিনের বোনাস সংগ্রহ করুন।</p>
+<button onclick="dailyBonus()">COLLECT +50</button>
+<div class="result" id="bonusResult"></div>
+</section>
+
+<section class="game">
+<h2>👤 Player Profile</h2>
+<p>Player: SK Gamer</p>
+<p>Best Flight: <span id="best">0</span>x</p>
+<button onclick="resetGame()">RESET LOCAL GAME</button>
+</section>
+</main>
+<footer>SK GAMING VIP © 2026<br>শুধু বিনোদনের জন্য ভার্চুয়াল পয়েন্ট। কোনো বাস্তব অর্থ লেনদেন নেই।</footer>
 
 <script>
-const STORE="skvip_points_v1";
-const BONUS="skvip_bonus_v1";
-const BEST="skvip_best_v1";
-
-let points=Number(localStorage.getItem(STORE));
-if(!Number.isFinite(points)||points<0)points=1000;
-let best=Number(localStorage.getItem(BEST))||0;
-
-const $=id=>document.getElementById(id);
-
-function save(){
-localStorage.setItem(STORE,String(points));
-$("balance").textContent=points.toLocaleString("en-US");
-$("profileBalance").textContent=points.toLocaleString("en-US");
-$("bestFlight").textContent=best.toFixed(2)+"x";
-$("profileBest").textContent=best.toFixed(2)+"x";
-const claimed=localStorage.getItem(BONUS)===dayKey();
-$("dailyBonus").disabled=claimed;
-$("dailyBonus").textContent=claimed?"BONUS CLAIMED TODAY":"🎁 CLAIM DAILY BONUS";
+let coins=Number(localStorage.getItem("skcoins")||1000);
+let best=Number(localStorage.getItem("skbest")||0);
+let flightTimer=null, multiplier=1, flightActive=false;
+function update(){
+ document.getElementById("coins").textContent=coins;
+ document.getElementById("best").textContent=best;
+ localStorage.setItem("skcoins",coins);
+ localStorage.setItem("skbest",best);
 }
-
-function addPoints(n){
-points+=n;
-save();
+function addCoins(n){
+ coins+=n;update();
 }
-
-function dayKey(){
-let d=new Date();
-return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+function startFlight(){
+ if(flightActive)return;
+ flightActive=true;multiplier=1;
+ document.getElementById("start").disabled=true;
+ document.getElementById("stop").disabled=false;
+ document.getElementById("crashResult").textContent="";
+ document.getElementById("rocket").textContent="🚀";
+ flightTimer=setInterval(()=>{
+ multiplier+=0.1;
+ document.getElementById("flight").textContent=multiplier.toFixed(1)+"x";
+ if(Math.random()<0.035){
+  endFlight(false);
+ }
+ },300);
 }
-
-document.querySelectorAll(".tab").forEach(btn=>{
-btn.addEventListener("click",()=>{
-document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
-document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===btn.dataset.tab));
-});
-});
-
-// ROCKET CRASH ARCADE
-let flightTimer=null;
-let flightStart=0;
-let flightValue=1;
-let flightEnd=0;
-
-function finishFlight(stopped){
-clearInterval(flightTimer);
-flightTimer=null;
-$("startCrash").disabled=false;
-$("stopCrash").disabled=true;
-
-if(stopped){
-const reward=Math.max(1,Math.floor(flightValue*5));
-addPoints(reward);
-$("crashStatus").textContent="ভালো থামিয়েছেন! +"+reward+" ভার্চুয়াল পয়েন্ট";
-}else{
-$("crashStatus").textContent="এই রাউন্ড শেষ! আবার চেষ্টা করুন।";
+function endFlight(stopped){
+ if(!flightActive)return;
+ clearInterval(flightTimer);flightActive=false;
+ document.getElementById("start").disabled=false;
+ document.getElementById("stop").disabled=true;
+ if(stopped){
+  let reward=Math.round(multiplier*5);
+  coins+=reward;update();
+  best=Math.max(best,multiplier);
+  document.getElementById("crashResult").textContent="সফল! +" + reward + " ভার্চুয়াল পয়েন্ট";
+ }else{
+  document.getElementById("rocket").textContent="💥";
+  document.getElementById("crashResult").textContent="রাউন্ড শেষ! আবার চেষ্টা করুন।";
+ }
+ document.getElementById("flight").textContent=multiplier.toFixed(1)+"x";
+ update();
 }
+function stopFlight(){endFlight(true)}
+function spinWheel(){
+ let prizes=[5,10,15,20,25,30];
+ let p=prizes[Math.floor(Math.random()*prizes.length)];
+ addCoins(p);
+ document.getElementById("wheelResult").textContent="আপনি পেয়েছেন "+p+" পয়েন্ট!";
 }
-
-$("startCrash").addEventListener("click",()=>{
-if(flightTimer)return;
-$("startCrash").disabled=true;
-$("stopCrash").disabled=false;
-$("crashStatus").textContent="রকেট উড়ছে…";
-flightStart=Date.now();
-flightEnd=Date.now()+4500+Math.random()*4500;
-flightValue=1;
-$("rocket").textContent="🚀";
-
-flightTimer=setInterval(()=>{
-const elapsed=(Date.now()-flightStart)/1000;
-flightValue=1+elapsed*0.42;
-$("multiplier").textContent=flightValue.toFixed(2)+"x";
-$("rocket").style.transform="translateY(-"+Math.min(65,elapsed*9)+"px)";
-
-if(Date.now()>=flightEnd){
-$("rocket").textContent="💥";
-finishFlight(false);
+function rollDice(){
+ let n=1+Math.floor(Math.random()*6);
+ document.getElementById("dice").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][n-1];
+ document.getElementById("diceResult").textContent="সংখ্যা: "+n;
 }
-},80);
-});
-
-$("stopCrash").addEventListener("click",()=>{
-if(!flightTimer)return;
-if(flightValue>best){
-best=flightValue;
-localStorage.setItem(BEST,String(best));
-}
-finishFlight(true);
-$("rocket").style.transform="translateY(0)";
-save();
-});
-
-// SKILL WHEEL
-let spinning=false;
-
-$("spinButton").addEventListener("click",()=>{
-if(spinning)return;
-spinning=true;
-$("spinButton").disabled=true;
-
-const prizes=[5,10,15,20,25,30];
-let turns=0;
-
-const timer=setInterval(()=>{
-$("wheel").textContent=["🎡","🔄","✨"][turns%3];
-turns++;
-
-if(turns>=12){
-clearInterval(timer);
-const prize=prizes[Math.floor(Math.random()*prizes.length)];
-addPoints(prize);
-$("wheel").textContent="🎡";
-$("wheelStatus").textContent="আপনি "+prize+" পয়েন্ট পেয়েছেন!";
-spinning=false;
-$("spinButton").disabled=false;
-}
-},110);
-});
-
-// DICE PUZZLE
-const diceFaces=["⚀","⚁","⚂","⚃","⚄","⚅"];
-
-$("rollDice").addEventListener("click",()=>{
-const roll=1+Math.floor(Math.random()*6);
-$("diceFace").textContent=diceFaces[roll-1];
-const prize=roll>=4?20:5;
-addPoints(prize);
-$("diceStatus").textContent="ফল "+roll+" — আপনি "+prize+" পয়েন্ট পেলেন!";
-});
-
-// MEMORY MATCH
-const symbols=["🍀","🍋","⭐","💎"];
-let cards=[];
-let opened=[];
-let matched=0;
-let locked=false;
-
+let cards=[],first=null,locked=false,matches=0;
 function newMemory(){
-cards=[...symbols,...symbols].sort(()=>Math.random()-.5);
-opened=[];
-matched=0;
-locked=false;
-$("memoryStatus").textContent="কার্ড খুলে জোড়া মেলান।";
-$("memoryGrid").innerHTML="";
-
-cards.forEach((symbol,i)=>{
-const b=document.createElement("button");
-b.className="tile";
-b.textContent="❔";
-b.addEventListener("click",()=>flipCard(i,b));
-$("memoryGrid").appendChild(b);
-});
+ cards=["🍎","🍌","🍇","🍒","🍋","🥝","🍉","🍍"];
+ cards=[...cards,...cards].sort(()=>Math.random()-.5);
+ first=null;locked=false;matches=0;
+ document.getElementById("memoryResult").textContent="";
+ renderMemory();
 }
-
-function flipCard(i,b){
-if(locked||b.classList.contains("revealed")||opened.some(x=>x.i===i))return;
-
-b.textContent=cards[i];
-b.classList.add("revealed");
-opened.push({i,b});
-
-if(opened.length===2){
-const [a,c]=opened;
-
-if(cards[a.i]===cards[c.i]){
-opened=[];
-matched++;
-$("memoryStatus").textContent="জোড়া মিলেছে!";
-
-if(matched===symbols.length){
-addPoints(50);
-$("memoryStatus").textContent="সব জোড়া মিলেছে! +৫০ পয়েন্ট";
+function renderMemory(){
+ let box=document.getElementById("memory");
+ box.innerHTML="";
+ cards.forEach((v,i)=>{
+ let b=document.createElement("button");
+ b.className="tile";
+ b.textContent=v==="?"?"❔":v;
+ b.disabled=v==="?"||locked;
+ b.onclick=()=>flip(i);
+ box.appendChild(b);
+ });
 }
-}else{
-locked=true;
-setTimeout(()=>{
-a.b.textContent="❔";
-c.b.textContent="❔";
-a.b.classList.remove("revealed");
-c.b.classList.remove("revealed");
-opened=[];
-locked=false;
-},750);
+function flip(i){
+ if(cards[i]==="?"||locked)return;
+ if(first===null){
+  first=i;renderMemory();
+  return;
+ }
+ let buttons=document.querySelectorAll("#memory button");
+ buttons[i].textContent=cards[i];
+ if(cards[first]===cards[i]){
+  cards[first]="?";cards[i]="?";matches++;
+  first=null;
+  if(matches===8){
+   addCoins(30);
+   document.getElementById("memoryResult").textContent="জিতেছেন! +30 পয়েন্ট";
+  }else renderMemory();
+ }else{
+  locked=true;
+  buttons[first].textContent=cards[first];
+  setTimeout(()=>{
+   first=null;locked=false;renderMemory();
+  },700);
+ }
 }
+function dailyBonus(){
+ let today=new Date().toDateString();
+ if(localStorage.getItem("skbonus")===today){
+  document.getElementById("bonusResult").textContent="আজকের বোনাস নেওয়া হয়েছে।";
+  return;
+ }
+ coins+=50;localStorage.setItem("skbonus",today);
+ update();
+ document.getElementById("bonusResult").textContent="+50 পয়েন্ট পেয়েছেন!";
 }
+function resetGame(){
+ if(confirm("সব স্থানীয় গেমের পয়েন্ট রিসেট করবেন?")){
+  coins=1000;best=0;
+  localStorage.removeItem("skcoins");
+  localStorage.removeItem("skbest");
+  update();
+ }
 }
-
-$("newMemory").addEventListener("click",newMemory);
-
-$("tapCoin").addEventListener("click",()=>{
-addPoints(10);
-$("tapStatus").textContent="+১০ পয়েন্ট যোগ হয়েছে!";
-});
-
-$("dailyBonus").addEventListener("click",()=>{
-if(localStorage.getItem(BONUS)===dayKey())return;
-addPoints(100);
-localStorage.setItem(BONUS,dayKey());
-$("bonusStatus").textContent="আজকের ১০০ বোনাস পয়েন্ট যোগ হয়েছে!";
-save();
-});
-
-$("resetGame").addEventListener("click",()=>{
-if(!confirm("এই ডিভাইসের গেমের অগ্রগতি রিসেট করবেন?"))return;
-points=1000;
-best=0;
-[STORE,BONUS,BEST].forEach(k=>localStorage.removeItem(k));
-$("bonusStatus").textContent="গেম রিসেট হয়েছে।";
-save();
-});
-
+update();
 newMemory();
-save();
 </script>
 </body>
 </html>
